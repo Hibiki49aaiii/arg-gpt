@@ -89,21 +89,16 @@ Do not imitate:
 All contact-like data:
 use controlled domains / non-dialable placeholders during development.
 
-## 5. Municipality Naming Gate
+## 5. Municipality Naming Lock
 
-「凪代市」はworking name。
+Production name: **凪代市（なぎしろし）**。
 
-Before public release:
-- exact municipality name search
-- major locality conflict check
-- pronunciation conflict check
-- existing company / school / public body conflict check
-- social handle/domain collision check
+Decision rationale:
+- 旧仮称「久代市（くしろし）」は実在の釧路市との音声混同リスクが高い。
+- Web完全一致検索で現行自治体名としての使用は確認できなかった。
+- Public release前には企業名・学校名・ドメイン・SNSハンドルの最終衝突確認のみ再実施する。
 
-If risk is non-trivial:
-rename before artifact production lock.
-
-Renaming after producing PDFs/audio is expensive, so this gate occurs before P4 Vertical Slice implementation.
+この名称はVertical Slice以降のartifactで固定し、安易に変更しない。
 
 ## 6. Domain State Strategy
 
@@ -260,7 +255,7 @@ Sites may share code internally while remaining visually unrelated.
 ## 14. Release Gate
 
 No public launch until:
-- naming gate complete
+- naming lock rechecked for release
 - fiction boundary tested
 - all contact/address data checked
 - no real emergency instructions accidentally copied
