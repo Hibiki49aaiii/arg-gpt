@@ -67,6 +67,7 @@ function resetMap(){
 
 function markAnchor(which){
   var s=load();
+  if(s.ending)return s;
   if(!s.realityB)return s;
   s.observed[which]=true;
   if(s.observed.site007&&s.observed.site00108){
