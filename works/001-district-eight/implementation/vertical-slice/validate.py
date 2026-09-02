@@ -220,7 +220,9 @@ print(f"HTML files: {len(html_files)}")
 print(f"In-world HTML files: {len(inworld_files)}")
 print("Recovery routes: A / B / C")
 print("Act 2+ in-world spoiler scan: enabled")
-print("Blind playtest boundary scan: enabled")\nprint("Human Gate operator launcher: validated")\nprint("Anonymous local JSON export: validated")
+print("Blind playtest boundary scan: enabled")
+print("Human Gate operator launcher: validated")
+print("Anonymous local JSON export: validated")
 
 if errors:
     print("\nVALIDATION FAILED")
