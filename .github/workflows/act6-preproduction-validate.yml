@@ -1,0 +1,39 @@
+name: Act 6 Preproduction Validation
+
+on:
+  push:
+    paths:
+      - "works/001-district-eight/ACT6_*.md"
+      - "works/001-district-eight/implementation/act6-staging/**"
+      - ".github/workflows/act6-preproduction-validate.yml"
+  pull_request:
+    paths:
+      - "works/001-district-eight/ACT6_*.md"
+      - "works/001-district-eight/implementation/act6-staging/**"
+      - ".github/workflows/act6-preproduction-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-act6:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Act 6 staging contract
+        run: python3 works/001-district-eight/implementation/act6-staging/validate_act6.py
+
+      - name: Ensure Act 6 is not linked from Act 0-5 runtimes
+        run: |
+          if grep -R --include='*.html' --include='*.js' --include='*.css' -nE 'act6-staging|統合復元図|MAP_COMPLETE_UNOBSERVED|Seven Became Eight|保存方針|END-A|END-B|END-C'             works/001-district-eight/implementation/vertical-slice/sites             works/001-district-eight/implementation/act2-staging/site             works/001-district-eight/implementation/act3-staging/site             works/001-district-eight/implementation/act4-staging/site             works/001-district-eight/implementation/act5-staging/site; then
+            echo "Act 6 content leaked into an earlier runtime"
+            exit 1
+          fi
