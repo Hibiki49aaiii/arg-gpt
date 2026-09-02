@@ -4,6 +4,8 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from html.parser import HTMLParser
+from urllib.parse import unquote, urlsplit
 
 ROOT=Path(__file__).parent
 DATA=ROOT/"content.json"
@@ -144,11 +146,177 @@ for forbidden in data.get("player_facing_forbidden_terms",[]):
     if forbidden in player_blob:
         fail(f"Act 5 contract leaks Act 6 term: {forbidden}")
 
+
+# ---------------------------------------------------------------------------
+# Staging website integrity
+# ---------------------------------------------------------------------------
+SITE=ROOT/"site"
+
+class LinkParser(HTMLParser):
+    def __init__(self)->None:
+        super().__init__()
+        self.refs:list[str]=[]
+    def handle_starttag(self,tag,attrs)->None:
+        d=dict(attrs)
+        for key in ("href","src"):
+            value=d.get(key)
+            if value:
+                self.refs.append(value)
+
+def target_for(source:Path,ref:str)->Path|None:
+    parts=urlsplit(ref)
+    if parts.scheme or parts.netloc or ref.startswith("#") or ref.startswith("mailto:"):
+        return None
+    p=unquote(parts.path)
+    if not p:
+        return None
+    target=(SITE/p.lstrip("/")) if p.startswith("/") else (source.parent/p)
+    if p.endswith("/"):
+        target=target/"index.html"
+    return target.resolve()
+
+required_pages=[
+    SITE/"archives/index.html",
+    SITE/"archives/maps/index.html",
+    SITE/"archives/maps/compare/index.html",
+    SITE/"archives/phonebook/index.html",
+    SITE/"archives/photos/p1842/index.html",
+    SITE/"research/index.html",
+    SITE/"research/kiritani/note-a/index.html",
+    SITE/"research/kiritani/reverse-citation/index.html",
+    SITE/"research/kiritani/note-b/index.html",
+    SITE/"research/containment/index.html",
+    SITE/"saegusa/index.html",
+    SITE/"saegusa/timeline/index.html",
+    SITE/"saegusa/final/index.html",
+]
+for page in required_pages:
+    if not page.exists():
+        fail(f"required staging page missing: {page.relative_to(ROOT)}")
+
+html_files=sorted(SITE.rglob("*.html"))
+site_text_parts=[]
+for page in html_files:
+    text=page.read_text(encoding="utf-8")
+    site_text_parts.append(text)
+    if '<html lang="ja"' not in text:
+        fail(f"{page.relative_to(ROOT)}: missing lang=ja")
+    if "<main" not in text:
+        fail(f"{page.relative_to(ROOT)}: missing main landmark")
+    parser=LinkParser()
+    parser.feed(text)
+    for ref in parser.refs:
+        target=target_for(page,ref)
+        if target is not None and not target.exists():
+            fail(f"{page.relative_to(ROOT)}: broken local reference {ref}")
+
+site_text="\n".join(site_text_parts)
+
+# Act 6 must remain unrevealed in player-facing Act 5 pages.
+for forbidden in (
+    "プレイヤーが第八区を作る",
+    "完全地図を作ると現実が変わる",
+    "現在の防災ページに第8避難区が追加",
+    "調査が再発原因",
+    "END-A","END-B","END-C"
+):
+    if forbidden in site_text:
+        fail(f"Act 5 staging HTML leaks Act 6 term: {forbidden}")
+
+maps_page=(SITE/"archives/maps/index.html").read_text(encoding="utf-8")
+for required in ("MAP-1997","MAP-1998-07","MAP-1998-09","MAP-2001","1997 市街地図 保存複写","1998年7月 市街地図 印刷複写","1998年9月 市街地図 保管原本","2001 デジタル保存スキャン"):
+    if required not in maps_page:
+        fail(f"map collection page missing: {required}")
+if "水無坂" in maps_page:
+    fail("EV-021 map collection must not label the target feature 水無坂")
+
+compare_page=(SITE/"archives/maps/compare/index.html").read_text(encoding="utf-8")
+for required in ('id="anchor-a"','id="anchor-b"','id="anchor-c"','data-lock-map','data-map-solved hidden',"Text-only route","(57,42) → (62,35)","(57,42) → (63,34)"):
+    if required not in compare_page:
+        fail(f"PZ-008 compare DOM/content missing: {required}")
+if "水無坂" in compare_page:
+    fail("PZ-008 compare page must not label target line 水無坂")
+
+phone_page=(SITE/"archives/phonebook/index.html").read_text(encoding="utf-8")
+for required in ("1998年 初期参照複写","後年 保管版","水無坂","なし","あり","実在の電話番号・個人情報は使用していません"):
+    if required not in phone_page:
+        fail(f"EV-023 phonebook page missing: {required}")
+
+photo_page=(SITE/"archives/photos/p1842/index.html").read_text(encoding="utf-8")
+for required in ("Reliability: Unknown / Optional","scan crop difference","restoration artifact","negative mix-up","labeling error","本編進行にも必須ではありません"):
+    if required not in photo_page:
+        fail(f"EV-022 optional/Unknown framing missing: {required}")
+
+research_index=(SITE/"research/index.html").read_text(encoding="utf-8")
+if 'href="/research/containment/"' in research_index:
+    fail("research index must not bypass Reverse Citation directly to containment")
+if 'href="/saegusa/"' in research_index:
+    fail("research index must not bypass Kiritani route directly to Saegusa")
+
+note_a_page=(SITE/"research/kiritani/note-a/index.html").read_text(encoding="utf-8")
+for required in ("4.3 [欠落]","共有刺激または情報伝播","4.3参照箇所"):
+    if required not in note_a_page:
+        fail(f"EV-024 Note A missing: {required}")
+if 'href="/research/containment/"' in note_a_page:
+    fail("Note A must not bypass PZ-009 to containment")
+
+reverse_page=(SITE/"research/kiritani/reverse-citation/index.html").read_text(encoding="utf-8")
+for cid in ("C-01","C-02","C-03","C-04"):
+    if cid not in reverse_page:
+        fail(f"PZ-009 page missing citation: {cid}")
+for required in ("新規回答者","記録追加後","記述量区分A–D","reverse direction not excluded",'data-synthesize-citations','data-citation-solved hidden'):
+    if required not in reverse_page:
+        fail(f"PZ-009 DOM/semantic missing: {required}")
+if 'href="/research/kiritani/note-b/"' not in reverse_page:
+    fail("PZ-009 solved state must unlock EV-025")
+
+note_b_page=(SITE/"research/kiritani/note-b/index.html").read_text(encoding="utf-8")
+for required in ("後続測定で新規回答者","記録が追加された後の新規回答者","因果を確定しない","直接情報伝播のみで説明することは困難"):
+    if required not in note_b_page:
+        fail(f"EV-025 temporal-direction wording missing: {required}")
+if 'href="/research/containment/"' not in note_b_page:
+    fail("EV-025 must lead to containment evidence")
+
+contain_page=(SITE/"research/containment/index.html").read_text(encoding="utf-8")
+for required in ("1998-09-03","Correlation only","因果効果を証明するものではありません","8/14–8/16","9/17–9/30","Confounders"):
+    if required not in contain_page:
+        fail(f"containment page missing: {required}")
+if 'href="/saegusa/"' not in contain_page:
+    fail("containment page must lead to Saegusa route")
+
+saegusa_page=(SITE/"saegusa/timeline/index.html").read_text(encoding="utf-8")
+for sid in ("S-1999","S-2005","S-2007","S-2008","S-2009"):
+    if f'data-saegusa-id="{sid}"' not in saegusa_page:
+        fail(f"PZ-010 timeline missing: {sid}")
+for required in ('data-check-saegusa','data-saegusa-solved hidden',"外部takedown記録なし","2008-09-03 / 09-07 / 09-12"):
+    if required not in saegusa_page:
+        fail(f"PZ-010 DOM/evidence missing: {required}")
+if saegusa_page.find('data-saegusa-id="S-2008"') > saegusa_page.find('data-saegusa-id="S-1999"'):
+    fail("Saegusa initial staging order should remain nonchronological")
+
+app_js=(SITE/"app.js").read_text(encoding="utf-8")
+for required in (
+    "a==='river'&&b==='civic'&&c==='railway'",
+    "checked.length===4",
+    "S-1999','S-2005','S-2007','S-2008','S-2009"
+):
+    if required not in app_js:
+        fail(f"Act 5 puzzle logic missing: {required}")
+
+final_page=(SITE/"saegusa/final/index.html").read_text(encoding="utf-8")
+for required in ("残せば戻る。消せば彼らが消える。","名前まで消す必要があるのか、まだ分からない","安全な保存方法や現象の完全な説明を残していません","残すべき記録と、残してはいけない記録は同じなのか"):
+    if required not in final_page:
+        fail(f"EV-031 ambiguity missing: {required}")
+
+
 print(f"Map versions: {len(versions)}")
 print(f"Fixed anchors: {len(anchors)}")
 print(f"Reverse citations: {len(citations)}")
 print(f"Trend buckets: {len(buckets)}")
 print(f"Saegusa chronology nodes: {len(chron)}")
+print(f"Staging HTML files: {len(html_files)}")
+print("Staging link integrity: enabled")
+print("Puzzle DOM contracts: enabled")
 print("Text-coordinate map route: enabled")
 print("EV-022 optional/Unknown: enforced")
 print("EV-027 correlation-only: enforced")
