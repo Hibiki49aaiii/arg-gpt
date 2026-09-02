@@ -29,3 +29,24 @@ Source of Truth:
 Act 3 preproduction is complete only when:
 - Act 3 Preproduction Validation passes
 - Vertical Slice regression remains green
+
+
+## Local staging
+
+```bash
+python3 -m http.server 8200 --directory works/001-district-eight/implementation/act3-staging/site
+```
+
+Open:
+
+```text
+http://localhost:8200/radio/
+```
+
+Useful direct entries:
+- `/archives/inquiry/1998-08-14/`
+- `/old-bousai/sender-log/`
+- `/radio/1998-08-14/`
+- `/radio/compare/1998-08-14/`
+
+Final recorded audio assets are intentionally out of scope for this staging pass. The waveform, duration, transcript-fragment, and alignment UI are sufficient to validate the narrative/puzzle structure.
