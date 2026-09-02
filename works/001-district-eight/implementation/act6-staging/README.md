@@ -68,3 +68,17 @@ Issue #28 is complete only when the same pull request passes:
 - Vertical Slice Validation
 
 Human Blind Playtest Issue #8 remains the runtime-integration gate.
+
+
+## Post-implementation validation
+
+The final staging gate additionally checks:
+- all local HTML references
+- PZ-011 workspace selectors and canonical state transition
+- EV-032 generated/provenance copy
+- SITE-007 dynamic A/B template
+- SITE-001 /08 dynamic A/B template
+- PZ-012 both-anchor state
+- ending lock and result distinction
+- local reset tool
+- no hidden state identifiers in in-world HTML
