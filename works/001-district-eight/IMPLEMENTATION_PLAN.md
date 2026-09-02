@@ -191,7 +191,7 @@ Metrics:
 - [x] Act 4 validator
 - [x] Act 5 validator
 - [x] Act 6 validator
-- [ ] Full-Staging Engineering Readiness master gate
+- [x] Full-Staging Engineering Readiness master gate
 
 ### Human / Release Gates
 - [ ] **Issue #8 Human Blind Playtest Round 1**
