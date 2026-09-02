@@ -182,7 +182,9 @@ Second semantic region.
 
 Suggested split:
 - Tape A: 「……みな……ざか……」 with dropout
-- Tape B: clearer 「……水無坂……」
+- Tape B: 「……水無…坂……」 with different dropout / clearer consonant boundaries
+
+Before alignment, neither displayed transcript may present the complete place name as confirmed text.
 
 After alignment/comparison:
 confidence sufficient for 「水無坂」.
