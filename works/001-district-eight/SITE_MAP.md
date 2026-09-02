@@ -34,7 +34,7 @@ SITE-001 旧防災情報ミラー
   |                    |          \
   |                    |           \--> SITE-006 研究資料ミラー
   |                    |
-  |                    +--> SITE-003 学校同窓資料室
+  |                    +--> SITE-003 学校史資料室
   |
   +--> SITE-004 三枝個人サイト
                  |
@@ -216,44 +216,45 @@ Final truthはこれに依存しない。
 
 ---
 
-# 4. SITE-003 — 久代東中学校 同窓資料室
+# 4. SITE-003 — 久代市学校史資料室
 
 ## Role
 Humanize the event.
 Acts 2–4。
 
 ## Placeholder Host
-`kushiro-east-alumni.district8.example.invalid`
+`school-archive.district8.example.invalid`
 
 ## Owner Persona
-卒業生有志の非公式資料室。
+地域の学校史・同窓資料を保存する非公式アーカイブ。
 
 ## Design
-個人運営の学校同窓サイト。
+地域学校史アーカイブ。
 2008〜2013年頃のブログ/CMS感。
+中学校卒業台帳、高校関係資料、小学校児童資料を学校別Collectionとして分離する。
 
 ## Pages
 
 ### S3-001 /
-学校史 / 卒業年度リンク。
+学校別Collection / 年度リンク。
 
-### S3-002 /1998/
-1998年度関連。
+### S3-002 /high-school/1998/
+1998年当時の高校関係資料。
 
-### S3-003 /students/yui-mizuki
+### S3-003 /junior-high/graduates/1997/yui-mizuki
 公開上は個人情報配慮で完全プロフィールにはしない。
 卒業アルバム断片へ繋ぐ。
 
 Evidence:
 EV-010。
 
-### S3-004 /documents/summer-notice
+### S3-004 /high-school/1998/summer-notice
 EV-006。
 
-### S3-005 /special-collection/drawings
+### S3-005 /elementary/special-collection/drawings
 EV-018。
 
-### S3-006 /archive/essays
+### S3-006 /elementary/archive/essays
 EV-020。
 
 ### S3-007 /mizuki-diary/
@@ -572,7 +573,7 @@ works/001-district-eight/
 ├─ sites/
 │  ├─ old-bousai/
 │  ├─ archives/
-│  ├─ alumni/
+│  ├─ school-archive/
 │  ├─ saegusa/
 │  ├─ radio/
 │  ├─ research/
