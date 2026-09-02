@@ -226,3 +226,13 @@ Do not record:
 
 テスターの発言をそのまま仕様変更理由にしない。
 複数セッションで再現する問題を優先する。
+
+## 13. Machine Gate
+
+各Blind Playtest roundの開始前に以下がPASSしていること。
+
+```bash
+python3 works/001-district-eight/implementation/vertical-slice/validate.py
+```
+
+Human observationはこのmachine gateを置き換えず、両方を満たして初めて次Actへ進む。
