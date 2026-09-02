@@ -1,0 +1,39 @@
+name: Act 3 Preproduction Validation
+
+on:
+  push:
+    paths:
+      - "works/001-district-eight/ACT3_*.md"
+      - "works/001-district-eight/implementation/act3-staging/**"
+      - ".github/workflows/act3-preproduction-validate.yml"
+  pull_request:
+    paths:
+      - "works/001-district-eight/ACT3_*.md"
+      - "works/001-district-eight/implementation/act3-staging/**"
+      - ".github/workflows/act3-preproduction-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-act3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Act 3 staging contract
+        run: python3 works/001-district-eight/implementation/act3-staging/validate_act3.py
+
+      - name: Ensure Act 3 is not linked from Act 0-2 runtimes
+        run: |
+          if grep -R --include='*.html' --include='*.js' --include='*.css' -nE 'act3-staging|33秒|水無坂|recordings/a|compare/1998-08-14'             works/001-district-eight/implementation/vertical-slice/sites/old-bousai             works/001-district-eight/implementation/vertical-slice/sites/archives             works/001-district-eight/implementation/act2-staging/site; then
+            echo "Act 3 content leaked into an earlier runtime"
+            exit 1
+          fi
