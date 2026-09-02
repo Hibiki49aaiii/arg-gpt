@@ -21,3 +21,12 @@ Source of Truth:
 - `PUZZLE_LEDGER.md`
 - `CHARACTERS.md`
 - `TIMELINE.md`
+
+
+## CI
+
+`.github/workflows/act4-preproduction-validate.yml` validates chronology, pre-incident knowledge, drawing independence, topology fairness, accessibility, spoiler boundaries, and Human Gate isolation.
+
+Act 4 preproduction is complete only when:
+- Act 4 Preproduction Validation passes
+- Vertical Slice Validation remains green
