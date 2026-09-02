@@ -5,6 +5,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 import sys
+import ast
 
 ROOT = Path(__file__).parent
 SITES = ROOT / "sites"
@@ -124,15 +125,95 @@ else:
     for required in (
         "district8-vs-state",
         "district8-vs-events",
+        "district8-vs-session-id",
+        "Session ID",
         "セッション状態をリセット",
+        "JSONをファイル保存",
+        "new Blob",
+        "URL.createObjectURL",
+        "session_id:",
+        "exported_at:",
+        "外部送信はしていません",
+        "実名・メールアドレス・アカウント名",
     ):
         if required not in playtest_text:
             errors.append(f"playtest tool missing requirement: {required}")
+
+    for forbidden_network_api in (
+        "fetch(",
+        "XMLHttpRequest",
+        "WebSocket",
+        "sendBeacon",
+        "EventSource",
+    ):
+        if forbidden_network_api in playtest_text:
+            errors.append(
+                f"playtest tool must remain local-only: found {forbidden_network_api}"
+            )
+
+    if "localStorage.removeItem(SESSION_KEY)" in playtest_text:
+        errors.append(
+            "session reset must preserve anonymous Session ID for export continuity"
+        )
 
 if "/meta/playtest.html" in inworld_text:
     errors.append(
         "developer playtest tool must not be linked directly from in-world pages"
     )
+
+# One-command Human Gate operator launcher.
+launcher = ROOT / "serve_playtest.py"
+if not launcher.exists():
+    errors.append("playtest launcher missing: serve_playtest.py")
+else:
+    launcher_text = launcher.read_text(encoding="utf-8")
+    try:
+        ast.parse(launcher_text)
+    except SyntaxError as exc:
+        errors.append(f"playtest launcher syntax error: {exc}")
+
+    for required in (
+        'default="127.0.0.1"',
+        "default=8000",
+        "/meta/playtest.html",
+        "/old-bousai/",
+        "--no-browser",
+        "SimpleHTTPRequestHandler",
+        "ThreadingTCPServer",
+    ):
+        if required not in launcher_text:
+            errors.append(f"playtest launcher missing requirement: {required}")
+
+    for forbidden_import in (
+        "requests",
+        "urllib.request",
+        "httpx",
+        "aiohttp",
+    ):
+        if f"import {forbidden_import}" in launcher_text or f"from {forbidden_import}" in launcher_text:
+            errors.append(
+                f"playtest launcher must not upload session data: {forbidden_import}"
+            )
+
+operator_runbook = ROOT.parent.parent / "PLAYTEST_OPERATOR_RUNBOOK.md"
+if not operator_runbook.exists():
+    errors.append("PLAYTEST_OPERATOR_RUNBOOK.md missing")
+else:
+    runbook_text = operator_runbook.read_text(encoding="utf-8")
+    for required in (
+        "serve_playtest.py",
+        "127.0.0.1:8000/meta/playtest.html",
+        "127.0.0.1:8000/old-bousai/",
+        "Session ID",
+        "PT-A01",
+        "JSONをファイル保存",
+        "PLAYTEST.md",
+        "PLAYTEST_OBSERVER_SHEET.md",
+        "30 minutes",
+        "real name",
+    ):
+        if required not in runbook_text:
+            errors.append(f"operator runbook missing requirement: {required}")
 
 
 print(f"HTML files: {len(html_files)}")
@@ -140,6 +221,8 @@ print(f"In-world HTML files: {len(inworld_files)}")
 print("Recovery routes: A / B / C")
 print("Act 2+ in-world spoiler scan: enabled")
 print("Blind playtest boundary scan: enabled")
+print("Human Gate operator launcher: validated")
+print("Anonymous local JSON export: validated")
 
 if errors:
     print("\nVALIDATION FAILED")

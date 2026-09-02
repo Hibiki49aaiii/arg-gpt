@@ -4,16 +4,20 @@ Act 0〜1 の静的プロトタイプ。
 
 ## 起動
 
-リポジトリルートから:
+通常のBlind Playtestでは専用launcherを使用:
 
 ```bash
-python3 -m http.server 8000 --directory works/001-district-eight/implementation/vertical-slice/sites
+python3 works/001-district-eight/implementation/vertical-slice/serve_playtest.py
 ```
 
-ブラウザ:
+Default:
+- Facilitator: `http://127.0.0.1:8000/meta/playtest.html`
+- Tester: `http://127.0.0.1:8000/old-bousai/`
 
-```text
-http://localhost:8000/old-bousai/
+ブラウザを自動起動しない場合:
+
+```bash
+python3 works/001-district-eight/implementation/vertical-slice/serve_playtest.py --no-browser
 ```
 
 ## 検証
@@ -44,4 +48,6 @@ GitHub Actions `.github/workflows/vertical-slice-validate.yml` で、リンク�
 - Protocol: `../../PLAYTEST.md`
 - Observer Sheet: `../../PLAYTEST_OBSERVER_SHEET.md`
 - Tester Feedback: `../../PLAYTEST_FEEDBACK_TEMPLATE.md`
-- Session tools: `http://localhost:8000/meta/playtest.html`
+- Operator Runbook: `../../PLAYTEST_OPERATOR_RUNBOOK.md`
+- Session tools: `http://127.0.0.1:8000/meta/playtest.html`
+- Session export: anonymous Session ID + local JSON download
