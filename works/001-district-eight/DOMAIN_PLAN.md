@@ -94,8 +94,8 @@ use controlled domains / non-dialable placeholders during development.
 Production name: **凪代市（なぎしろし）**。
 
 Decision rationale:
-- 旧仮称「久代市（くしろし）」は実在の釧路市との音声混同リスクが高い。
-- Web完全一致検索で現行自治体名としての使用は確認できなかった。
+- 以前のworking nameは実在自治体との音声混同リスクが高かったため廃止した。
+- 「凪代市」は現行制作名として固定する。
 - Public release前には企業名・学校名・ドメイン・SNSハンドルの最終衝突確認のみ再実施する。
 
 この名称はVertical Slice以降のartifactで固定し、安易に変更しない。
