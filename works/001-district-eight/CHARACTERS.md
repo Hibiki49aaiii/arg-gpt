@@ -13,7 +13,7 @@ Source of Truth:
 ## Profile
 - Born: 1953-11-08
 - Age in 1998: 44
-- Role: 久代市 総務部文書管理担当
+- Role: 凪代市 総務部文書管理担当
 - Public image: 地味で几帳面な行政職員
 - Narrative role: Hero → Whistleblower → Apparent Traitor → Tragic Custodian
 
@@ -127,7 +127,7 @@ Example:
 ## Profile
 - Born: 1981-04-27
 - Age in 1998: 17
-- Residence: 久代市東三丁目
+- Residence: 凪代市東三丁目
 - Role: 高校2年生
 - Narrative role: Human center / memory horror witness
 
@@ -399,7 +399,7 @@ Another child independently draws the same feature.
 三枝と一度だけメール交換。
 
 Knows:
-- 33秒音声は久代市側の原音源にはないらしい
+- 33秒音声は凪代市側の原音源にはないらしい
 - 三枝が音声コピーを欲しがっていた
 
 Does Not Know:
@@ -416,7 +416,7 @@ Does Not Know:
 作品内では実名を原則出さない。
 
 ## Role
-2026年に旧久代市防災サイトを復元した人物。
+2026年に旧凪代市防災サイトを復元した人物。
 
 ## Motivation
 Web史・地域資料保存。
