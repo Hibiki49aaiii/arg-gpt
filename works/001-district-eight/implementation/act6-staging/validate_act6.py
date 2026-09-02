@@ -238,6 +238,206 @@ human=data.get("human_gate",{})
 if human.get("issue")!=8 or human.get("required_before_runtime_integration") is not True:
     fail("Human Blind Playtest #8 must remain runtime-integration gate")
 
+# ---------------------------------------------------------------------------
+# Staging website integrity
+# ---------------------------------------------------------------------------
+from html.parser import HTMLParser
+from urllib.parse import unquote, urlsplit
+
+SITE=ROOT/"site"
+
+class LinkParser(HTMLParser):
+    def __init__(self)->None:
+        super().__init__()
+        self.refs:list[str]=[]
+    def handle_starttag(self,tag,attrs)->None:
+        d=dict(attrs)
+        for key in ("href","src"):
+            value=d.get(key)
+            if value:
+                self.refs.append(value)
+
+def target_for(source:Path,ref:str)->Path|None:
+    parts=urlsplit(ref)
+    if parts.scheme or parts.netloc or ref.startswith("#") or ref.startswith("mailto:"):
+        return None
+    p=unquote(parts.path)
+    if not p:
+        return None
+    target=(SITE/p.lstrip("/")) if p.startswith("/") else (source.parent/p)
+    if p.endswith("/"):
+        target=target/"index.html"
+    return target.resolve()
+
+required_pages=[
+    SITE/"index.html",
+    SITE/"workspace/index.html",
+    SITE/"generated-map/index.html",
+    SITE/"bousai-now/areas/index.html",
+    SITE/"old-bousai/disaster/areas/08/index.html",
+    SITE/"ending/index.html",
+    SITE/"ending/result/index.html",
+    SITE/"meta/index.html",
+]
+for page in required_pages:
+    if not page.exists():
+        fail(f"required staging page missing: {page.relative_to(ROOT)}")
+
+html_files=sorted(SITE.rglob("*.html"))
+site_parts=[]
+for page in html_files:
+    text=page.read_text(encoding="utf-8")
+    site_parts.append(text)
+    if '<html lang="ja"' not in text:
+        fail(f"{page.relative_to(ROOT)}: missing lang=ja")
+    if "<main" not in text:
+        fail(f"{page.relative_to(ROOT)}: missing main landmark")
+    parser=LinkParser()
+    parser.feed(text)
+    for ref in parser.refs:
+        target=target_for(page,ref)
+        if target is not None and not target.exists():
+            fail(f"{page.relative_to(ROOT)}: broken local reference {ref}")
+
+site_text="\n".join(site_parts)
+styles=(SITE/"styles.css").read_text(encoding="utf-8")
+app=(SITE/"app.js").read_text(encoding="utf-8")
+
+# Act 6 staging itself must also obey the no-glitch contract.
+no_glitch_blob=(site_text+"\n"+styles).lower()
+for token in data.get("no_glitch_forbidden",[]):
+    if token.lower() in no_glitch_blob:
+        fail(f"Act 6 staging contains forbidden no-glitch token: {token}")
+
+workspace=(SITE/"workspace/index.html").read_text(encoding="utf-8")
+for slot in slots:
+    if f'id="slot-{slot}"' not in workspace:
+        fail(f"workspace missing slot selector: {slot}")
+for required in (
+    "data-check-map",
+    "data-reset-map",
+    "data-map-status",
+    "data-map-solved hidden",
+    "data-pz012-observed hidden",
+    "Park ↔ Bus Stop = 2 links",
+    "Bus Stop ↔ Old Eighth Meeting Hall = 3 links",
+    "Old Eighth Meeting Hall ↔ Residential Cluster = 1 link",
+    "Park ↔ Residential Cluster = 4 links",
+):
+    if required not in workspace:
+        fail(f"workspace DOM/content missing: {required}")
+
+# State adapter / canonical solve contract.
+for slot,landmark in canonical.items():
+    if f"{slot}:'{landmark}'" not in app:
+        fail(f"app canonical assignment missing: {slot}={landmark}")
+for required in (
+    "s.state='MAP_COMPLETE_UNOBSERVED'",
+    "s.realityB=true",
+    "s.observed={site007:false,site00108:false}",
+    "統合復元図を保存しました。",
+    "s.state='REALITY_CHANGE_OBSERVED'",
+    "s.state='PZ012_OBSERVED'",
+    "if(s.ending)return s;",
+    "st.state='ENDING_SELECTED'",
+    "st.realityB=(id==='END-A')",
+):
+    if required not in app:
+        fail(f"Act 6 state adapter missing: {required}")
+
+generated=(SITE/"generated-map/index.html").read_text(encoding="utf-8")
+for required in (
+    "artifact_type:</strong> generated synthesis",
+    "generated_during_investigation:</strong> true",
+    "complete_source_map_found:</strong> false",
+    "この完成図と同一の資料は、現在確認されている1998年資料には存在しません。",
+    "各資料に分散していた位置関係を統合して作成したものです。",
+    "Placement Provenance",
+    "水無坂",
+):
+    if required not in generated:
+        fail(f"EV-032 page missing: {required}")
+for slot in slots:
+    if f"<td>{slot}</td>" not in generated:
+        fail(f"EV-032 page missing placement provenance row: {slot}")
+
+site007=(SITE/"bousai-now/areas/index.html").read_text(encoding="utf-8")
+for n in range(1,8):
+    if f"第{n}避難区" not in site007:
+        fail(f"SITE-007 baseline missing area {n}")
+for required in (
+    "最終更新: 2026-04-01",
+    "data-area8-row hidden",
+    "第8避難区",
+    "水無坂地域センター",
+    "data-area8-legend hidden",
+):
+    if required not in site007:
+        fail(f"SITE-007 A/B runtime template missing: {required}")
+for forbidden in ("新規","追加されました","復元されました"):
+    if forbidden in site007:
+        fail(f"SITE-007 improperly announces state B: {forbidden}")
+
+old08=(SITE/"old-bousai/disaster/areas/08/index.html").read_text(encoding="utf-8")
+for required in (
+    "data-old08-a",
+    "保存ページを確認できません",
+    "data-old08-b hidden",
+    "第8避難区",
+    "更新: 平成15年4月1日",
+    "旧八号集会所",
+):
+    if required not in old08:
+        fail(f"SITE-001 /08 A/B template missing: {required}")
+for forbidden in ("復元成功","新しく","現在追加"):
+    if forbidden in old08:
+        fail(f"SITE-001 /08 improperly announces state B: {forbidden}")
+
+ending_page=(SITE/"ending/index.html").read_text(encoding="utf-8")
+for required in (
+    "data-ending-locked",
+    "data-ending-choices hidden",
+    'data-ending-choice="END-A"',
+    'data-ending-choice="END-B"',
+    'data-ending-choice="END-C"',
+    "完全復元資料を公開状態で保持する",
+    "復元キーと精密地理を破棄する",
+    "人物記録を残し、精密地理を非公開化する",
+):
+    if required not in ending_page:
+        fail(f"ending gate/page missing: {required}")
+for forbidden in data.get("player_facing_forbidden_labels",[]):
+    if forbidden in ending_page:
+        fail(f"ending page contains privileged label: {forbidden}")
+
+result_page=(SITE/"ending/result/index.html").read_text(encoding="utf-8")
+for required in (
+    'data-result-id="END-A"',
+    'data-result-id="END-B"',
+    'data-result-id="END-C"',
+    "Mostly redacted",
+    "Minimal",
+    "Preserved",
+    "忘れないために、思い出してはいけないことがある。",
+):
+    if required not in result_page:
+        fail(f"ending result page missing mechanical distinction: {required}")
+
+meta_page=(SITE/"meta/index.html").read_text(encoding="utf-8")
+for required in ("data-meta-tool","data-state-json","data-reset-state"):
+    if required not in meta_page:
+        fail(f"staging reset tool missing: {required}")
+if "localStorage.removeItem(KEY)" not in app:
+    fail("state reset implementation missing")
+
+# Development-only meta route may expose state names; in-world pages should not
+# describe hidden transition identifiers directly.
+inworld_pages=[p for p in html_files if "/meta/" not in p.as_posix() and p.name=="index.html"]
+inworld_text="\n".join(p.read_text(encoding="utf-8") for p in inworld_pages)
+for hidden_name in ("MAP_COMPLETE_UNOBSERVED","REALITY_CHANGE_OBSERVED","PZ012_OBSERVED","ENDING_SELECTED"):
+    if hidden_name in inworld_text:
+        fail(f"in-world Act 6 HTML leaks internal state identifier: {hidden_name}")
+
 print(f"Assignments enumerated: {len(list(itertools.permutations(slots)))}")
 print(f"Constraint solutions: {len(solutions)}")
 print("Unique geography: enforced")
