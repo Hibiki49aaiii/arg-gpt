@@ -217,10 +217,10 @@ Visible:
 - path/slope leaving park
 - vending machine on slope
 - blue fence higher up
-- triangular roof beyond fence
 
 Occluded:
-exact relation of hall entrance to fence.
+- triangular-roof hall is not visible
+- anything beyond the blue fence.
 
 ## DR-B
 
@@ -243,7 +243,7 @@ Visible:
 - blue fence edge behind/uphill
 
 Occluded:
-most of triangular-roof hall.
+- triangular-roof hall is not visible.
 
 ## DR-C
 
@@ -263,10 +263,10 @@ Visible:
 - triangular roof at edge/top
 - blue fence close to hall
 - vending machine farther downhill
-- park / circular foundation at lower end
 
 Occluded:
-lower street connection beyond park.
+- park / circular foundation are hidden below a bend
+- lower street connection.
 
 Independence:
 - three households
@@ -361,13 +361,13 @@ Therefore EV-019 is supporting evidence only.
 Do not replace drawings with answer statements.
 
 ### DR-A Description
-“Park foreground. A circular base is drawn near center. A road rises away from the park. A vending-machine-shaped rectangle is partway up. A blue fence appears higher, and a triangular roof is visible beyond.”
+“Park foreground. A circular base is drawn near center. A road rises away from the park. A vending-machine-shaped rectangle is partway up. A blue fence appears higher. What lies beyond the fence is outside the drawing.”
 
 ### DR-B Description
-“View appears to be from a slope. A vending machine is closest. Below it is a park with a circular center shape. A blue fence edge appears behind the viewpoint. Only a small triangular roof corner is visible.”
+“View appears to be from a slope. A vending machine is closest. Below it is a park with a circular center shape. A blue fence edge appears behind/uphill. No building beyond it is visible.”
 
 ### DR-C Description
-“Foreground includes a triangular roof edge and blue fence. A slope descends away. A vending machine is farther down. At the lower end is a park with a circular center mark.”
+“Foreground includes a triangular roof edge and blue fence. A slope descends away. A vending machine is farther down. The lower end of the slope disappears behind a bend; the park is not visible.”
 
 The player still has to infer topology.
 
