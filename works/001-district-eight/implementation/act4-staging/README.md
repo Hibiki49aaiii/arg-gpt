@@ -52,3 +52,12 @@ Useful direct entries:
 - `/school/elementary/special-collection/partial-map/`
 
 Final child-drawing image assets are intentionally out of scope for this staging pass. The current schematic + text descriptions validate provenance, information distribution, topology fairness, and accessibility.
+
+
+## Staging completion gate
+
+Issue #19 is complete only when the same pull request passes:
+- Act 4 Preproduction Validation
+- Vertical Slice Validation
+
+Human Blind Playtest Issue #8 remains a separate runtime-connection gate.
