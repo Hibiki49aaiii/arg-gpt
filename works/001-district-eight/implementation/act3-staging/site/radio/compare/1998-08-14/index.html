@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>1998-08-14 受信記録 比較｜凪代地域ラジオ保存会</title><link rel="stylesheet" href="/styles.css"></head>
+<body><div class="radio-shell"><header class="radio-header"><h1>凪代地域ラジオ保存会</h1><p>1998-08-14 受信記録 比較</p></header>
+<nav class="radio-nav"><a href="/radio/1998-08-14/">資料一覧</a><a href="/radio/recordings/a/">録音A</a><a href="/radio/recordings/b/">録音B</a><a href="/old-bousai/sender-log/">送信記録</a></nav>
+<main data-compare>
+<h2>時間軸補正</h2>
+<p>2つの記録は録音機器と保存状態が異なるため、そのままでは時間軸が一致しません。共通する音を基準に位置を合わせることができます。</p>
+<div class="controls">
+<label>Anchor 1<select id="anchor-1"><option value="opening">通常放送・冒頭チャイム</option><option value="speech">読み上げ中の母音</option><option value="closing">通常放送・終了チャイム</option><option value="unknown-final">59秒付近の短いチャイム</option></select></label>
+<label>Anchor 2<select id="anchor-2"><option value="unknown-final">59秒付近の短いチャイム</option><option value="closing">通常放送・終了チャイム</option><option value="opening">通常放送・冒頭チャイム</option><option value="speech">読み上げ中の母音</option></select></label>
+<button type="button" id="apply-alignment">時間軸を補正</button>
+<button type="button" id="reset-alignment">リセット</button>
+</div>
+<p id="alignment-state" aria-live="polite"></p>
+
+<div class="timeline" aria-label="送信記録と受信記録の時間比較">
+<div class="timeline-label"><span>0秒 / 18:00:00</span><span>27秒 / sender end</span><span>60秒 / 18:01:00</span></div>
+<div class="track sender"><div class="normal"><strong>Sender</strong> normal test 27s</div><div class="surplus">no transmission logged</div></div>
+<div class="track"><div class="normal"><strong>Tape A</strong> normal test</div><div class="surplus">receiver audio continues</div></div>
+<div class="track"><div class="normal"><strong>Tape B</strong> normal test</div><div class="surplus">receiver audio continues</div></div>
+</div>
+
+<section id="unsolved-table">
+<h2>未補正Transcript断片</h2>
+<table class="fragment-table"><thead><tr><th>概算</th><th>Tape A</th><th>Tape B</th></tr></thead><tbody>
+<tr><td>31秒台</td><td>第八…の方は</td><td>…避難区…</td></tr>
+<tr><td>44秒台</td><td>みな…ざか</td><td>水無…坂</td></tr>
+<tr><td>58秒台</td><td>[短いチャイム?]</td><td>[短いチャイム?]</td></tr>
+</tbody></table>
+</section>
+
+<section id="alignment-result" class="success" hidden>
+<h2>時間軸補正結果</h2>
+<p><strong>Sender end: 27.000s</strong></p>
+<p>2つの受信記録は、送信側終了後も<strong>33.000秒</strong>にわたり共通する構造を持ちます。</p>
+</section>
+
+<section id="solved-table" hidden>
+<h2>同期後Composite</h2>
+<table class="fragment-table"><thead><tr><th>補正後時刻</th><th>Tape A</th><th>Tape B</th><th>Composite</th></tr></thead><tbody>
+<tr><td>31.4–35.8</td><td>第八…の方は</td><td>…避難区…</td><td><strong>第八避難区の方は…</strong></td></tr>
+<tr><td>44.4–48.1</td><td>みな…ざか</td><td>水無…坂</td><td><strong>水無坂</strong></td></tr>
+<tr><td>58.0–59.1</td><td>[短いチャイム]</td><td>[短いチャイム]</td><td>shared short chime / sender sourceには存在しない</td></tr>
+</tbody></table>
+<div class="note"><p>59秒付近の短いチャイムは通常試験放送のチャイムと一致しないため、補正Anchorとしては使用していません。</p><p>関連する地名を調べる場合: <span class="mono">水無坂</span></p></div>
+</section>
+</main><footer><a href="/radio/digitization-notes/">比較方法とデジタル化方針</a></footer></div><script src="/app.js"></script></body></html>
