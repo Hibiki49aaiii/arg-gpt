@@ -2,23 +2,32 @@
 from __future__ import annotations
 
 import json
-from datetime import date
-from pathlib import Path
+import re
 import sys
+from datetime import date
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).parent
 DATA = ROOT / "content.json"
+SITE = ROOT / "site"
 
 errors: list[str] = []
 
+
+def fail(message: str) -> None:
+    errors.append(message)
+
+
+# ---------------------------------------------------------------------------
+# Machine-readable narrative contract
+# ---------------------------------------------------------------------------
 try:
     data = json.loads(DATA.read_text(encoding="utf-8"))
 except Exception as exc:
     print(f"ACT2 VALIDATION FAILED: cannot load content.json: {exc}")
     sys.exit(1)
-
-def fail(message: str) -> None:
-    errors.append(message)
 
 if data.get("act") != 2:
     fail("act must be 2")
@@ -111,11 +120,103 @@ if identity.get("address") != "東三丁目12-4":
 seed = data.get("act3_seed", {})
 if seed.get("date") != "1998-08-14":
     fail("Act 3 seed must be only the date 1998-08-14")
+if seed.get("category") != "市民照会":
+    fail("Act 3 seed category must remain 市民照会")
 if seed.get("status") != "公開準備中":
     fail("Act 3 source must remain unrevealed in staging")
 
-# Player-facing staging data must not leak later mechanism terms.
-serialized = json.dumps(data, ensure_ascii=False)
+if not (
+    date.fromisoformat("1998-08-14")
+    < date.fromisoformat(by_number[215]["date"])
+    < date.fromisoformat(by_number[216]["date"])
+):
+    fail("Act 2 document dates violate incident -> code -> revision ordering")
+
+
+# ---------------------------------------------------------------------------
+# Staging website integrity
+# ---------------------------------------------------------------------------
+class LinkParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.refs: list[str] = []
+
+    def handle_starttag(self, tag, attrs) -> None:
+        data = dict(attrs)
+        for key in ("href", "src"):
+            value = data.get(key)
+            if value:
+                self.refs.append(value)
+
+
+def target_for(source: Path, ref: str) -> Path | None:
+    parts = urlsplit(ref)
+    if parts.scheme or parts.netloc or ref.startswith("#") or ref.startswith("mailto:"):
+        return None
+
+    path = unquote(parts.path)
+    if not path:
+        return None
+
+    if path.startswith("/"):
+        target = SITE / path.lstrip("/")
+    else:
+        target = source.parent / path
+
+    if path.endswith("/"):
+        target = target / "index.html"
+
+    return target.resolve()
+
+
+required_pages = [
+    SITE / "index.html",
+    SITE / "documents/index.html",
+    SITE / "documents/215/index.html",
+    SITE / "meetings/1998-08-17/index.html",
+    SITE / "meetings/1998-08-19/index.html",
+    SITE / "restricted/subjects-fragment/index.html",
+    SITE / "school/index.html",
+    SITE / "school/junior-high/1997/index.html",
+    SITE / "school/junior-high/1997/yui-mizuki/index.html",
+    SITE / "school/high-school/1998/enrollment/index.html",
+    SITE / "school/notices/1998-08-21/index.html",
+    SITE / "references/1998-08-14/index.html",
+]
+
+for page in required_pages:
+    if not page.exists():
+        fail(f"required staging page missing: {page.relative_to(ROOT)}")
+
+html_files = sorted(SITE.rglob("*.html"))
+site_text_parts: list[str] = []
+
+for page in html_files:
+    text = page.read_text(encoding="utf-8")
+    site_text_parts.append(text)
+
+    if '<html lang="ja"' not in text:
+        fail(f"{page.relative_to(ROOT)}: missing lang=ja")
+    if "<main" not in text:
+        fail(f"{page.relative_to(ROOT)}: missing main landmark")
+
+    parser = LinkParser()
+    parser.feed(text)
+    for ref in parser.refs:
+        target = target_for(page, ref)
+        if target is not None and not target.exists():
+            fail(
+                f"{page.relative_to(ROOT)}: broken local reference "
+                f"{ref} -> {target.relative_to(ROOT) if ROOT in target.parents else target}"
+            )
+
+site_text = "\n".join(site_text_parts)
+
+# Ensure stale route prefix from an earlier staging layout never comes back.
+if "/act2/" in site_text:
+    fail("staging HTML contains stale /act2/ route prefix")
+
+# Player-facing staging must not leak Act 3+ mechanism.
 for forbidden in (
     "33秒",
     "27秒",
@@ -124,23 +225,68 @@ for forbidden in (
     "再構築",
     "現実改変",
     "受信カセット",
+    "防災無線",
 ):
-    if forbidden in serialized:
-        fail(f"Act 2 staging leaks later mechanism term: {forbidden}")
+    if forbidden in site_text:
+        fail(f"Act 2 staging HTML leaks later mechanism term: {forbidden}")
 
-# Date ordering invariants.
-if not (
-    date.fromisoformat("1998-08-14")
-    < date.fromisoformat(by_number[215]["date"])
-    < date.fromisoformat(by_number[216]["date"])
+if "第八避難区在住者" in site_text:
+    fail("Act 2 staging must not imply residence in 第八避難区")
+
+# Required visible facts.
+page215 = (SITE / "documents/215/index.html").read_text(encoding="utf-8")
+for required in (
+    "平成10年8月19日",
+    "管理区分番号を「08」とする。",
+    "第八避難区",
+    "第1避難区から第7避難区までの区域変更は行わない。",
 ):
-    fail("Act 2 document dates violate incident -> code -> revision ordering")
+    if required not in page215:
+        fail(f"215 page missing required fact: {required}")
+
+subjects = (SITE / "restricted/subjects-fragment/index.html").read_text(encoding="utf-8")
+for required in ("現住所", "管理区分", "水城 結", "1981-04-27", "東三丁目12-4", "第八"):
+    if required not in subjects:
+        fail(f"subject register page missing: {required}")
+
+ledger_page = (SITE / "school/junior-high/1997/yui-mizuki/index.html").read_text(encoding="utf-8")
+for required in ("水城 結", "1981年4月27日", "凪代市東三丁目12-4", "水城 真理子"):
+    if required not in ledger_page:
+        fail(f"school ledger page missing identity key: {required}")
+
+enrollment_page = (SITE / "school/high-school/1998/enrollment/index.html").read_text(encoding="utf-8")
+for required in ("水城 結", "1981年4月27日", "水城 真理子", "東三丁目"):
+    if required not in enrollment_page:
+        fail(f"high-school page missing identity key: {required}")
+
+notice_page = (SITE / "school/notices/1998-08-21/index.html").read_text(encoding="utf-8")
+if "第八避難区対象者" not in notice_page:
+    fail("school notice HTML must use 第八避難区対象者")
+
+exit_page = (SITE / "references/1998-08-14/index.html").read_text(encoding="utf-8")
+for required in ("1998年8月14日", "市民照会", "公開準備中"):
+    if required not in exit_page:
+        fail(f"Act 2 exit page missing: {required}")
+
+# app.js creates links dynamically, so validate those paths too.
+app_js = (SITE / "app.js").read_text(encoding="utf-8")
+if "/act2/" in app_js:
+    fail("app.js contains stale /act2/ route prefix")
+
+dynamic_paths = set(re.findall(r'href=\\?"(/[^"\\]+)', app_js))
+for ref in dynamic_paths:
+    target = target_for(SITE / "index.html", ref)
+    if target is not None and not target.exists():
+        fail(f"app.js dynamic link broken: {ref}")
+
 
 print(f"Artifacts: {len(artifacts)}")
 print(f"Document sequence: {numbers}")
+print(f"Staging HTML files: {len(html_files)}")
 print("Identity keys: name / DOB / address / guardian")
 print("Human-gate isolation: enabled")
 print("Act 3 mechanism spoiler scan: enabled")
+print("Staging link integrity: enabled")
 
 if errors:
     print("\nACT2 VALIDATION FAILED")
