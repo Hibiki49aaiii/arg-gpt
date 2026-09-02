@@ -239,7 +239,9 @@ Contains:
 - vending machine close to viewer
 - circular park foundation downhill
 - segment of blue fence uphill
-- triangular roof only partly visible
+
+Occluded:
+- triangular-roof hall is not visible
 
 ### Drawing C
 Date: 1998-08-18
@@ -251,7 +253,9 @@ Contains:
 - triangular-roof hall edge
 - blue fence in front/along hall
 - vending machine farther down slope
-- circular park foundation at lower end
+
+Occluded:
+- park is hidden by the bend/lower terrain
 
 No absolute compass directions.
 
