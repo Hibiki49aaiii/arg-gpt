@@ -19,3 +19,7 @@ The staging contract is subordinate to:
 - `ACT2_CONTENT.md`
 - `TIMELINE.md`
 - `CHARACTERS.md`
+
+## CI
+
+`.github/workflows/act2-preproduction-validate.yml` verifies timeline ordering, identity keys, spoiler boundaries, and Human Gate isolation.
