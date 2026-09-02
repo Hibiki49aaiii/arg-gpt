@@ -1,6 +1,6 @@
 # 第八避難区 — Full Staging Status
 
-Status: **Engineering Readiness Pending Master CI**
+Status: **Engineering Readiness PASS**
 Narrative Release Gate: **Issue #8 Human Blind Playtest Round 1**
 
 ## Current Position
@@ -187,3 +187,32 @@ Still separate future work after the Human Gate includes:
 - indexing/cache policy validation
 - final privacy/analytics review
 - final public fiction-boundary review
+
+
+## Master Regression Result
+
+GitHub Actions:
+`Full Staging Readiness`
+
+Result:
+**PASS**
+
+The master job executes:
+1. Act 0–1 Vertical Slice validator
+2. Act 2 validator
+3. Act 3 validator
+4. Act 4 validator
+5. Act 5 validator
+6. Act 6 validator
+7. Cross-act readiness validator
+
+Confirmed cross-act invariants:
+- legacy production-name scan clean
+- 1998-08-14 → 1998-08-19 chronology preserved
+- 27 / 60 / 33 timing preserved
+- pre-8/14 水無坂 occurrence = 0
+- Act 5 does not reveal Act 6 player-causality layer
+- Act 6 complete map remains generated, not found
+- Human Gate remains Issue #8
+
+Engineering readiness is therefore complete for the isolated staging architecture.
