@@ -40,3 +40,12 @@ http://localhost:8100/
 The staging site uses root-relative paths and is self-contained under this server root.
 
 Current Act 0–1 Vertical Slice remains a separate runtime and intentionally has no link to this staging site while Human Blind Playtest Issue #8 is pending.
+
+
+## Staging completion gate
+
+Issue #11 is complete only when both:
+- Act 2 Preproduction Validation
+- Vertical Slice Validation
+
+pass on the same pull request.
