@@ -1,0 +1,205 @@
+{
+  "act": 3,
+  "status": "staging-unlinked",
+  "runtime_connected": false,
+  "title": "33 Seconds",
+  "incident": {
+    "date": "1998-08-14",
+    "sender": {
+      "start": "18:00:00.000",
+      "end": "18:00:27.000",
+      "duration_seconds": 27,
+      "source_id": "TEST_0814",
+      "result": "NORMAL",
+      "aux_input": "OFF",
+      "manual_override": "NONE"
+    },
+    "receiver_window": {
+      "start": "18:00:00.000",
+      "end": "18:01:00.000",
+      "duration_seconds": 60,
+      "surplus_start": "18:00:27.000",
+      "surplus_end": "18:01:00.000",
+      "surplus_seconds": 33
+    }
+  },
+  "chronology": {
+    "phrase_received": "1998-08-14",
+    "first_inquiry": "1998-08-14T18:12:00",
+    "similar_inquiries": "1998-08-14T18:25:00",
+    "formal_code_created": "1998-08-19"
+  },
+  "evidence": [
+    {
+      "id": "EV-011",
+      "type": "sender_log",
+      "required_facts": [
+        "18:00:00 START TEST_0814 SCHEDULED",
+        "18:00:27 END TEST_0814 NORMAL",
+        "Recorded duration: 00:27.000",
+        "Aux input: OFF",
+        "Manual override: NONE"
+      ],
+      "forbidden_terms": [
+        "第八避難区",
+        "水無坂"
+      ]
+    },
+    {
+      "id": "EV-012",
+      "type": "receiver_recording",
+      "label": "Tape A",
+      "provenance": {
+        "owner": "local resident archive donation",
+        "capture_path": "acoustic outdoor-speaker capture",
+        "custody": "donated 2011; digitized 2024",
+        "reliability": "Mostly Reliable"
+      },
+      "pre_alignment_display_fragments": [
+        "第八…の方は",
+        "みな…ざか"
+      ]
+    },
+    {
+      "id": "EV-013",
+      "type": "receiver_recording",
+      "label": "Tape B",
+      "provenance": {
+        "owner": "regional FM archive",
+        "capture_path": "separate municipal-information monitor receiver",
+        "custody": "continuous station archive custody",
+        "reliability": "Confirmed"
+      },
+      "pre_alignment_display_fragments": [
+        "…避難区…",
+        "水無…坂"
+      ]
+    },
+    {
+      "id": "EV-014",
+      "type": "maintenance_report",
+      "author": "片瀬 亮介",
+      "date": "1998-08-15",
+      "claims": [
+        "source audio length 27s",
+        "scheduler normal",
+        "sender stop logged at 18:00:27",
+        "auxiliary input not selected",
+        "manual send operation absent",
+        "fault not reproducible",
+        "source of reported additional audio unidentified"
+      ],
+      "reliability": "Biased"
+    },
+    {
+      "id": "EV-015",
+      "type": "inquiry_memo",
+      "entries": [
+        {
+          "time": "18:12",
+          "text": "第八ってどこですか"
+        },
+        {
+          "time": "18:25",
+          "text": "同様問い合わせ 3件"
+        }
+      ],
+      "reliability": "Mostly Reliable"
+    }
+  ],
+  "surplus_segments": [
+    {
+      "start": 27,
+      "end": 30.8,
+      "role": "structured_noise",
+      "required": false
+    },
+    {
+      "start": 30.8,
+      "end": 36.4,
+      "role": "voice_fragment",
+      "composite": "第八避難区の方は…",
+      "required": true
+    },
+    {
+      "start": 36.4,
+      "end": 43.9,
+      "role": "mostly_unintelligible",
+      "required": false
+    },
+    {
+      "start": 43.9,
+      "end": 49.2,
+      "role": "place_name_fragment",
+      "composite": "水無坂",
+      "required": true
+    },
+    {
+      "start": 49.2,
+      "end": 57.8,
+      "role": "mostly_unintelligible",
+      "required": false
+    },
+    {
+      "start": 57.8,
+      "end": 59.15,
+      "role": "shared_short_chime",
+      "required": true
+    },
+    {
+      "start": 59.15,
+      "end": 60,
+      "role": "noise_tail",
+      "required": false
+    }
+  ],
+  "alignment": {
+    "anchors": [
+      {
+        "id": "A1",
+        "type": "normal_opening_chime",
+        "within_sender_window": true
+      },
+      {
+        "id": "A2",
+        "type": "normal_closing_chime",
+        "within_sender_window": true
+      }
+    ],
+    "final_chime_is_anchor": false,
+    "external_audio_editor_required": false,
+    "controls": [
+      "play_pause",
+      "nudge_0.1s",
+      "anchor_a",
+      "anchor_b",
+      "region_replay",
+      "waveform_text_toggle"
+    ]
+  },
+  "accessibility": {
+    "equivalent_route": true,
+    "components": [
+      "waveform_envelopes",
+      "timestamped_transcript_fragments",
+      "confidence_markers",
+      "duration_table",
+      "shared_feature_markers",
+      "sender_end_marker"
+    ],
+    "full_composite_before_solve": false
+  },
+  "act4_lead": {
+    "search_term": "水無坂",
+    "target_question": "水無坂を、誰が覚えていた？"
+  },
+  "player_facing_forbidden_terms": [
+    "共同記憶",
+    "記述密度",
+    "再構築",
+    "現実改変",
+    "記録媒介",
+    "桐谷",
+    "三枝"
+  ]
+}
