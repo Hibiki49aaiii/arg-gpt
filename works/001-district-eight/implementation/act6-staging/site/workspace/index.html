@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>統合復元Workspace｜第八避難区</title><link rel="stylesheet" href="/styles.css"></head>
+<body><div class="shell"><header class="header"><h1>統合復元Workspace</h1><p>分散資料の位置関係を統合する</p></header>
+<nav class="nav"><a href="/">Staging Entry</a><a href="/generated-map/">統合復元図</a><a href="/bousai-now/areas/">現行避難区一覧</a><a href="/old-bousai/disaster/areas/08/">旧サイト /08</a></nav>
+<main data-workspace>
+<h2>候補Graph</h2>
+<pre class="graph">S1 — S2 — S3 — S4 — S6
+      |
+      S5</pre>
+
+<h2>既知の制約</h2>
+<table><thead><tr><th>Source</th><th>Constraint</th></tr></thead><tbody>
+<tr><td>児童画 / 作文</td><td>Park → Vending → Blue Fence → Hall は主経路上で連続する。</td></tr>
+<tr><td>桐谷 距離表</td><td>Park ↔ Bus Stop = 2 links</td></tr>
+<tr><td>桐谷 距離表</td><td>Bus Stop ↔ Old Eighth Meeting Hall = 3 links</td></tr>
+<tr><td>桐谷 距離表</td><td>Old Eighth Meeting Hall ↔ Residential Cluster = 1 link</td></tr>
+<tr><td>桐谷 距離表</td><td>Park ↔ Residential Cluster = 4 links</td></tr>
+</tbody></table>
+
+<h2>ランドマーク配置</h2>
+<div class="slot-grid">
+<div class="slot"><label>S1<select id="slot-S1"><option value="">未設定</option><option value="PARK">Park</option><option value="VENDING_MACHINE">Vending Machine</option><option value="BLUE_FENCE">Blue Fence</option><option value="OLD_EIGHT_MEETING_HALL">Old Eighth Meeting Hall</option><option value="BUS_STOP">Bus Stop</option><option value="RESIDENTIAL_CLUSTER">Residential Cluster</option></select></label></div>
+<div class="slot"><label>S2<select id="slot-S2"><option value="">未設定</option><option value="PARK">Park</option><option value="VENDING_MACHINE">Vending Machine</option><option value="BLUE_FENCE">Blue Fence</option><option value="OLD_EIGHT_MEETING_HALL">Old Eighth Meeting Hall</option><option value="BUS_STOP">Bus Stop</option><option value="RESIDENTIAL_CLUSTER">Residential Cluster</option></select></label></div>
+<div class="slot"><label>S3<select id="slot-S3"><option value="">未設定</option><option value="PARK">Park</option><option value="VENDING_MACHINE">Vending Machine</option><option value="BLUE_FENCE">Blue Fence</option><option value="OLD_EIGHT_MEETING_HALL">Old Eighth Meeting Hall</option><option value="BUS_STOP">Bus Stop</option><option value="RESIDENTIAL_CLUSTER">Residential Cluster</option></select></label></div>
+<div class="slot"><label>S4<select id="slot-S4"><option value="">未設定</option><option value="PARK">Park</option><option value="VENDING_MACHINE">Vending Machine</option><option value="BLUE_FENCE">Blue Fence</option><option value="OLD_EIGHT_MEETING_HALL">Old Eighth Meeting Hall</option><option value="BUS_STOP">Bus Stop</option><option value="RESIDENTIAL_CLUSTER">Residential Cluster</option></select></label></div>
+<div class="slot"><label>S5<select id="slot-S5"><option value="">未設定</option><option value="PARK">Park</option><option value="VENDING_MACHINE">Vending Machine</option><option value="BLUE_FENCE">Blue Fence</option><option value="OLD_EIGHT_MEETING_HALL">Old Eighth Meeting Hall</option><option value="BUS_STOP">Bus Stop</option><option value="RESIDENTIAL_CLUSTER">Residential Cluster</option></select></label></div>
+<div class="slot"><label>S6<select id="slot-S6"><option value="">未設定</option><option value="PARK">Park</option><option value="VENDING_MACHINE">Vending Machine</option><option value="BLUE_FENCE">Blue Fence</option><option value="OLD_EIGHT_MEETING_HALL">Old Eighth Meeting Hall</option><option value="BUS_STOP">Bus Stop</option><option value="RESIDENTIAL_CLUSTER">Residential Cluster</option></select></label></div>
+</div>
+<div class="controls"><button type="button" data-check-map>配置を照合</button><button type="button" data-reset-map>入力を戻す</button></div>
+<p class="status" data-map-status hidden aria-live="polite"></p>
+
+<section data-map-solved hidden>
+<div class="panel"><p><a href="/generated-map/">生成した統合復元図とPlacement provenanceを確認する</a></p></div>
+<details><summary>必要なら次の確認先のヒントを見る</summary><p>ここまでの資料と、最初に基準にしたページを比較してください。</p><details><summary>もう一段階</summary><p>現在の避難区一覧と、旧サイトの08ページをもう一度確認してください。</p></details></details>
+</section>
+
+<section data-pz012-observed hidden>
+<div class="result"><h2>基準状態との比較</h2><p>これらのページは、復元図作成前に保存した基準状態と一致しません。</p><p><a href="/ending/">保存範囲を決める</a></p></div>
+</section>
+</main><footer>EV-032 synthesis workspace</footer></div><script src="/app.js"></script></body></html>
