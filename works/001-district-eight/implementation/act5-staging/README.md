@@ -21,3 +21,12 @@ Source of Truth:
 - `PUZZLE_LEDGER.md`
 - `CHARACTERS.md`
 - `TIMELINE.md`
+
+
+## CI
+
+`.github/workflows/act5-preproduction-validate.yml` validates map chronology, fixed anchors, record-side corroboration, reverse citations, containment correlation wording, Saegusa chronology, Act 6 spoiler boundaries, and Human Gate isolation.
+
+Act 5 preproduction is complete only when:
+- Act 5 Preproduction Validation passes
+- Vertical Slice Validation remains green
