@@ -62,22 +62,31 @@ function initDistrict(){
   }
   setState('visited_area_index');
 }
+function renderSearch(form){
+  var q=form.querySelector('input[name=q]').value.trim();
+  var result=document.querySelector('[data-search-result]');
+  result.hidden=false;
+  if(q==='旧八号集会所'){
+    result.innerHTML='<p><strong>検索結果 0件</strong></p><p>該当する公開資料はありません。</p>';
+    event('archive_exact_search_zero',{term:'old-hachigo-hall'});
+  }else if(q){
+    result.innerHTML='<p><strong>検索結果 1件</strong></p><p><a href="#">地域施設台帳（公開分）</a> — 入力語に近い一般資料です。</p>';
+  }else{
+    result.innerHTML='<p>検索語を入力してください。</p>';
+  }
+}
 function initSearch(){
   var form=document.querySelector('[data-archive-search]');
   if(!form)return;
+  var params=new URLSearchParams(location.search);
+  var initial=params.get('q');
+  if(initial){
+    form.querySelector('input[name=q]').value=initial;
+    renderSearch(form);
+  }
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var q=form.querySelector('input[name=q]').value.trim();
-    var result=document.querySelector('[data-search-result]');
-    result.hidden=false;
-    if(q==='旧八号集会所'){
-      result.innerHTML='<p><strong>検索結果 0件</strong></p><p>該当する公開資料はありません。</p>';
-      event('archive_exact_search_zero',{term:'old-hachigo-hall'});
-    }else if(q){
-      result.innerHTML='<p><strong>検索結果 1件</strong></p><p><a href="#">地域施設台帳（公開分）</a> — 入力語に近い一般資料です。</p>';
-    }else{
-      result.innerHTML='<p>検索語を入力してください。</p>';
-    }
+    renderSearch(form);
   });
 }
 document.addEventListener('DOMContentLoaded',function(){
@@ -87,6 +96,10 @@ document.addEventListener('DOMContentLoaded',function(){
   initMeta();
   initDistrict();
   initSearch();
+  document.querySelectorAll('[data-state]').forEach(function(el){
+    if(el===body)return;
+    el.addEventListener('click',function(){setState(el.getAttribute('data-state'));});
+  });
   document.querySelectorAll('[data-clue-route]').forEach(function(el){
     el.addEventListener('click',function(){
       event('area08_trace_seen',{route:el.getAttribute('data-clue-route')});
