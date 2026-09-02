@@ -30,3 +30,25 @@ Source of Truth:
 Act 4 preproduction is complete only when:
 - Act 4 Preproduction Validation passes
 - Vertical Slice Validation remains green
+
+
+## Local staging
+
+```bash
+python3 -m http.server 8300 --directory works/001-district-eight/implementation/act4-staging/site
+```
+
+Open:
+
+```text
+http://localhost:8300/school/
+```
+
+Useful direct entries:
+- `/school/mizuki-diary/`
+- `/school/mizuki-diary/references/`
+- `/school/elementary/special-collection/drawings/`
+- `/school/elementary/special-collection/topology/`
+- `/school/elementary/special-collection/partial-map/`
+
+Final child-drawing image assets are intentionally out of scope for this staging pass. The current schematic + text descriptions validate provenance, information distribution, topology fairness, and accessibility.
