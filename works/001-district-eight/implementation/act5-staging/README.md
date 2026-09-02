@@ -30,3 +30,27 @@ Source of Truth:
 Act 5 preproduction is complete only when:
 - Act 5 Preproduction Validation passes
 - Vertical Slice Validation remains green
+
+
+## Local staging
+
+```bash
+python3 -m http.server 8400 --directory works/001-district-eight/implementation/act5-staging/site
+```
+
+Open:
+
+```text
+http://localhost:8400/archives/
+```
+
+Useful direct entries:
+- `/archives/maps/`
+- `/archives/maps/compare/`
+- `/archives/phonebook/`
+- `/research/kiritani/note-a/`
+- `/research/kiritani/reverse-citation/`
+- `/research/containment/`
+- `/saegusa/timeline/`
+
+Final map scans/PDF assets are intentionally outside this staging pass. Current schematics validate chronology, information distribution, puzzle gating, causal-strength wording, and accessibility.
