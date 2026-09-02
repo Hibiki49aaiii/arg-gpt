@@ -18,100 +18,53 @@ Trailhead → 欠番08 → 古いPDF → 二重住所 → 1998-08-14 → 33秒�
 
 ## Core Evidence
 
-### EV-001 防災区一覧
-Visible: 第1〜第7避難区。
-Hidden: asset命名規則に08。
-Function: Rabbit Hole。
+Canonical IDs are defined in `EVIDENCE_LEDGER.md`. This graph only lists the narrative spine evidence.
 
-### EV-002 平成10年度給水計画
-Visible: 「第八避難区 旧八号集会所」。
-Contradiction: 現行資料に第八区はない。
+### Act 0–1
+- EV-001 現行避難区一覧 — 第1〜第7
+- EV-002 旧ページasset index — area08欠番
+- EV-004 平成10年夏季防災計画 — 「第八避難区対象者」
+- EV-005 給水地点一覧 — 「第八避難区 / 旧八号集会所」
 
-### EV-003 学校配布物
-Visible: 第八避難区の児童へ別行動指示。
-Hidden Meaning: 対象は場所ではなく人。
+### Act 2
+- EV-006 学校向け通知 — 「第八避難区対象者」
+- EV-007 庁内分類コード起案 — 1998-08-19、管理区分08
+- EV-008 8/17・8/19対策会議議事要旨 — 管理目的
+- EV-009 対象者一覧断片 — 水城結 / 東三丁目 / 第八
+- EV-010 水城結 卒業台帳 — 事件前から東三丁目
 
-### EV-004 住民名簿断片
-Visible: 水城結 / 第八避難区。
+### Act 3
+- EV-011 防災無線送信ログ — 18:00:00開始 / 18:00:27終了
+- EV-012 市内受信カセットA — 60秒録音 / 余剰33秒
+- EV-013 地域FM受信カセットB — 独立録音にも同じ33秒
+- EV-014 片瀬保守報告書 — 送信設備正常 / 外部混信原因不明
+- EV-015 8/14問い合わせメモ — 18:12「第八ってどこですか」
 
-### EV-005 卒業アルバム
-Visible: 同じ水城結が東三丁目在住。
-Reveal: 二重住所。
-
-### EV-006 防災無線送信ログ
-Visible: 1998-08-14 18:00 試験放送のみ。
-
-### EV-007 受信側カセット
-Visible: 33秒余分。
-Reveal: 送信側にない音声。
-
-### EV-008 水城結の日記
-Visible: 水無坂の家の記憶と母親との住所認識の食い違い。
-Reveal: 本人にとって架空記憶が本物。
-
-### EV-009 児童画コレクション
-Visible: 複数の子どもが同じ公園、坂、集会所を描く。
-Reveal: 同一の架空空間を共有。
-
-### EV-010 古地図比較
-Visible: 1998年以前には水無坂がなく、後年資料ほど道路らしき線が現れる。
-
-### EV-011 三枝内部告発メモ
-Visible: 「人を消している」。
-First Reading: 行政が被害者を隠蔽。
-Second Reading: 人名と場所の検索可能性を消していた。
-
-### EV-012 桐谷研究ノート
-Visible: 記述密度と再現率が相関。
-Reveal: 記録が媒介。
-
-### EV-013 三枝最終メモ
-Visible: 「残せば戻る。消せば彼らが消える。」
-Function: Final moral problem。
-
-### EV-014 復元地図
-Player-created。
-Function: プレイヤー自身が最後の危険なEvidenceを作る。
+### Act 4–6
+- EV-016 / EV-017 水城結の日記 — 水無坂記憶の発生と減衰
+- EV-018 / EV-020 児童画・作文 — 独立人物が同一の架空空間を共有
+- EV-021 / EV-023 地図・電話帳版差分 — 記録側の後発整合
+- EV-024 / EV-025 桐谷研究ノート — 共同記憶 / 記述密度
+- EV-028〜EV-031 三枝記録 — 保存思想から削除への反転
+- EV-032 プレイヤー復元地図 — 初めて完全地理を生成
+- EV-033 / EV-034 現行・旧Webの変化 — Seven Became Eight
 
 ## Major Puzzles
 
-### PZ-001 URL / Asset Sequence
-01〜07の規則と複数ヒントから08の欠落を見つける。
-Reveal: 第八区の存在痕跡。
+Canonical puzzle definitions are in `PUZZLE_LEDGER.md`.
 
-### PZ-002 PDF Metadata
-複数PDFのmetadata、source filename、creation dateを比較。
-Reveal: area08が意図的に削除された可能性。
-
-### PZ-003 Two Addresses
-住民名簿、卒業アルバム、学区資料を生年月日で照合。
-Reveal: 水城結が同時期に2住所。
-
-### PZ-004 33-second Audio
-複数の受信録音と時報を基準に欠損音声を復元。
-Reveal: 送信ログにない放送。
-Accessibility: 音声スペクトログラムだけを必須解法にしない。
-
-### PZ-005 Diary Pagination
-天気、学校行事、テレビ欄などから日記断片を時系列復元。
-Reveal: 存在しない家への郷愁。
-
-### PZ-006 Children's Map
-児童画の共通ランドマークを抽出し相対位置を求める。
-Reveal: 独立した人物が同一空間を共有。
-
-### PZ-007 Archive Overlay
-年代の違う地図の基準点を合わせる。
-Reveal: 後年資料ほど水無坂が形成される。
-
-### PZ-008 Research Index
-削除ページ番号と引用ページを逆引き。
-Reveal: 記録密度が現象を強める。
-
-### PZ-009 Final Reconstruction
-全Actの地名、距離、ランドマークで地図を完成。
-Consequence: 第八区ページが出現。
-Reveal: Puzzle solved = anomaly reconstructed。
+1. PZ-001 Missing Eight — 01〜07の規則から08欠番を確認
+2. PZ-002 Deleted File Provenance — PDF metadata/source filename比較
+3. PZ-003 Document Number Gap — 214 / 216から215号を逆引き
+4. PZ-004 Two Homes — 水城結のidentity照合と「住所 / 管理区分」分離
+5. PZ-005 33 Seconds — 送信27秒と複数受信60秒を同期
+6. PZ-006 Before and After — 日記断片を時系列復元
+7. PZ-007 The Park Without a Clock — 児童画の相対位置統合
+8. PZ-008 Map That Learns — 年代別地図差分を固定基準点で比較
+9. PZ-009 Reverse Citation — 削除研究章を引用文脈から復元
+10. PZ-010 Why Did He Delete It? — 三枝の保存思想と削除行動を時系列化
+11. PZ-011 The Missing Whole — 複数資料から完全地図を初生成
+12. PZ-012 Seven Became Eight — 序盤の現実基準ページの静かな変化を確認
 
 ## Site Architecture
 
