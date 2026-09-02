@@ -27,21 +27,29 @@ Target: Act 0〜1 Vertical Slice
 Start:
 
 ```bash
-python3 -m http.server 8000 --directory works/001-district-eight/implementation/vertical-slice/sites
+python3 works/001-district-eight/implementation/vertical-slice/serve_playtest.py
 ```
 
-Entry:
+Default URLs:
 
 ```text
-http://localhost:8000/old-bousai/
+Facilitator control:
+http://127.0.0.1:8000/meta/playtest.html
+
+Tester entry:
+http://127.0.0.1:8000/old-bousai/
 ```
 
+The launcher binds to localhost by default and opens the Facilitator control page.
+Do not show the Facilitator page to the tester.
+
 Before every session:
-1. `/meta/playtest.html` を開く
-2. 「セッション状態をリセット」
-3. Entry URLへ戻る
-4. Browser cacheは通常状態でよい
-5. 前テスターのメモ・検索履歴を見せない
+1. Facilitator controlを開く
+2. 個人情報を含まないSession IDを設定する（例: PT-A01）
+3. 「セッション状態をリセット」
+4. Tester entry URLだけをテスターへ渡す
+5. Browser cacheは通常状態でよい
+6. 前テスターのメモ・検索履歴を見せない
 
 ## 4. Exact Facilitator Script
 
@@ -201,11 +209,21 @@ Local-only keys:
 - `district8-vs-events`
 
 Playtest後:
-`/meta/playtest.html` からJSONをコピー。
+Facilitator control `/meta/playtest.html` で、
+1. Session IDを確認
+2. 「状態を表示」
+3. 「JSONをファイル保存」
 
-保存する場合はSession IDだけを付ける。
+Export payload includes:
+- anonymous `session_id`
+- `exported_at`
+- local `state`
+- local `events`
 
-Example:
+The tool does not upload telemetry.
+JSON remains browser-local until the facilitator explicitly saves it.
+
+Example Session ID:
 `PT-A01`
 
 Do not record:
@@ -236,3 +254,16 @@ python3 works/001-district-eight/implementation/vertical-slice/validate.py
 ```
 
 Human observationはこのmachine gateを置き換えず、両方を満たして初めて次Actへ進む。
+
+
+## 14. Operator Runbook
+
+Operational short-form:
+`PLAYTEST_OPERATOR_RUNBOOK.md`
+
+The runbook may simplify setup steps, but this `PLAYTEST.md` remains authoritative for:
+- facilitator wording
+- tester composition
+- 30-minute timing
+- M1–M6 metrics
+- PASS / REVISE / FAIL decision
