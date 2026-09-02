@@ -1,0 +1,39 @@
+name: Act 5 Preproduction Validation
+
+on:
+  push:
+    paths:
+      - "works/001-district-eight/ACT5_*.md"
+      - "works/001-district-eight/implementation/act5-staging/**"
+      - ".github/workflows/act5-preproduction-validate.yml"
+  pull_request:
+    paths:
+      - "works/001-district-eight/ACT5_*.md"
+      - "works/001-district-eight/implementation/act5-staging/**"
+      - ".github/workflows/act5-preproduction-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-act5:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Act 5 staging contract
+        run: python3 works/001-district-eight/implementation/act5-staging/validate_act5.py
+
+      - name: Ensure Act 5 is not linked from Act 0-4 runtimes
+        run: |
+          if grep -R --include='*.html' --include='*.js' --include='*.css' -nE 'act5-staging|Map That Learns|Reverse Citation|記述密度|残せば戻る|Saegusa'             works/001-district-eight/implementation/vertical-slice/sites             works/001-district-eight/implementation/act2-staging/site             works/001-district-eight/implementation/act3-staging/site             works/001-district-eight/implementation/act4-staging/site; then
+            echo "Act 5 content leaked into an earlier runtime"
+            exit 1
+          fi
