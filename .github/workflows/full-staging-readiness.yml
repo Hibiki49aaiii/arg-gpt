@@ -1,0 +1,50 @@
+name: Full Staging Readiness
+
+on:
+  push:
+    paths:
+      - "README.md"
+      - "works/001-district-eight/**"
+      - ".github/workflows/full-staging-readiness.yml"
+  pull_request:
+    paths:
+      - "README.md"
+      - "works/001-district-eight/**"
+      - ".github/workflows/full-staging-readiness.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Act 0-1 Vertical Slice
+        run: python3 works/001-district-eight/implementation/vertical-slice/validate.py
+
+      - name: Validate Act 2
+        run: python3 works/001-district-eight/implementation/act2-staging/validate_act2.py
+
+      - name: Validate Act 3
+        run: python3 works/001-district-eight/implementation/act3-staging/validate_act3.py
+
+      - name: Validate Act 4
+        run: python3 works/001-district-eight/implementation/act4-staging/validate_act4.py
+
+      - name: Validate Act 5
+        run: python3 works/001-district-eight/implementation/act5-staging/validate_act5.py
+
+      - name: Validate Act 6
+        run: python3 works/001-district-eight/implementation/act6-staging/validate_act6.py
+
+      - name: Validate cross-act readiness
+        run: python3 works/001-district-eight/full-readiness/validate_full_story.py
