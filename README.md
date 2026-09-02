@@ -86,7 +86,7 @@ arg-gpt/
 
 - Act 0–1 Vertical Slice: implemented / machine-validated
 - Act 2–6: isolated staging implemented / machine-validated
-- Full cross-act Engineering Readiness Gate: in progress
+- Full cross-act Engineering Readiness Gate: **PASS**
 - Human Blind Playtest: Issue #8 pending
 - Public runtime integration: blocked until Human Gate passes
 
