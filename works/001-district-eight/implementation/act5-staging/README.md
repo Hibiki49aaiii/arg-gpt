@@ -54,3 +54,12 @@ Useful direct entries:
 - `/saegusa/timeline/`
 
 Final map scans/PDF assets are intentionally outside this staging pass. Current schematics validate chronology, information distribution, puzzle gating, causal-strength wording, and accessibility.
+
+
+## Staging completion gate
+
+Issue #23 is complete only when the same pull request passes:
+- Act 5 Preproduction Validation
+- Vertical Slice Validation
+
+Human Blind Playtest Issue #8 remains a separate runtime-connection gate.
