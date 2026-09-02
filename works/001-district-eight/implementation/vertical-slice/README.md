@@ -38,3 +38,10 @@ python3 works/001-district-eight/implementation/vertical-slice/validate.py
 ## CI
 
 GitHub Actions `.github/workflows/vertical-slice-validate.yml` で、リンク・Spoiler境界・Recovery Route・Act 1資料整合性を検証します。
+
+## Blind Playtest
+
+- Protocol: `../../PLAYTEST.md`
+- Observer Sheet: `../../PLAYTEST_OBSERVER_SHEET.md`
+- Tester Feedback: `../../PLAYTEST_FEEDBACK_TEMPLATE.md`
+- Session tools: `http://localhost:8000/meta/playtest.html`
