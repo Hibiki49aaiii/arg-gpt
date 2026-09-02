@@ -1,6 +1,6 @@
 # 第八避難区 — Implementation Plan
 
-Production Specification作成済み。本番サイト実装前のStory/Evidence/Puzzle/Site設計を固定中。
+Production Specification固定済み。Act 0〜6 Stagingは分離実装・個別machine validation済み。現在はEngineering Readiness横断検証とHuman Blind Playtest Gateを管理する段階。
 
 ## P0 — Story Lock
 
@@ -163,8 +163,9 @@ Metrics:
 - robots / indexing policy
 - spoiler management
 
-## Production Specification Status
+## Production / Implementation Status
 
+### Architecture / Specification
 - [x] TIMELINE.md
 - [x] CHARACTERS.md
 - [x] EVIDENCE_LEDGER.md
@@ -173,7 +174,45 @@ Metrics:
 - [x] MEDIA_LEDGER.md
 - [x] DOMAIN_PLAN.md
 - [x] VERTICAL_SLICE.md
+- [x] Naming Lock: 凪代市
 
-Story / overall production architecture is now implementation-ready.
+### Staging Implementation
+- [x] Act 0〜1 Vertical Slice
+- [x] Act 2 Staging
+- [x] Act 3 Staging
+- [x] Act 4 Staging
+- [x] Act 5 Staging
+- [x] Act 6 Staging
 
-Next implementation gate: finalize fictional municipality naming, then build the Act 0–1 Vertical Slice defined in VERTICAL_SLICE.md.
+### Machine Validation
+- [x] Vertical Slice validator
+- [x] Act 2 validator
+- [x] Act 3 validator
+- [x] Act 4 validator
+- [x] Act 5 validator
+- [x] Act 6 validator
+- [ ] Full-Staging Engineering Readiness master gate
+
+### Human / Release Gates
+- [ ] **Issue #8 Human Blind Playtest Round 1**
+- [ ] Public runtime integration
+- [ ] Production Hardening
+- [ ] Public release
+
+## Engineering Readiness
+
+Full status:
+`FULL_STAGING_STATUS.md`
+
+The master gate must verify all Act validators plus cross-act chronology, naming, spoiler boundaries, generated-vs-found semantics, and isolation.
+
+## Human Blind Playtest
+
+**Issue #8 is the required Human Blind Playtest gate.**
+
+Until it passes:
+- Act 2〜6 staging must remain unlinked from the current public trail.
+- Act 0〜1 narrative salience is not considered frozen.
+- public release remains blocked.
+
+Machine PASS does not substitute for human discovery / comprehension testing.
