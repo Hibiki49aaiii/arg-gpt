@@ -1,6 +1,6 @@
 # 第八避難区 — Implementation Plan
 
-現段階はストーリー／全体設計フェーズ。本番サイト実装は次工程。
+Production Specification作成済み。本番サイト実装前のStory/Evidence/Puzzle/Site設計を固定中。
 
 ## P0 — Story Lock
 
@@ -73,7 +73,7 @@ Deliverables:
 Proposed properties:
 1. 旧久代市防災情報ミラー
 2. 久代市史料デジタルアーカイブ
-3. 久代東中学校 同窓資料室
+3. 久代市学校史資料室
 4. 個人サイト「記録庫・三枝」
 5. 地域ラジオ保存会
 6. 研究資料ミラー
@@ -163,12 +163,12 @@ Metrics:
 - robots / indexing policy
 - spoiler management
 
-## Immediate Next Files
+## Production Specification Status
 
-1. TIMELINE.md
-2. CHARACTERS.md
-3. EVIDENCE_LEDGER.md
-4. PUZZLE_LEDGER.md
-5. SITE_MAP.md
+- [x] TIMELINE.md
+- [x] CHARACTERS.md
+- [x] EVIDENCE_LEDGER.md
+- [x] PUZZLE_LEDGER.md
+- [x] SITE_MAP.md
 
-この5つが揃った時点で、ストーリーから実装仕様へ移行可能。
+Next: MEDIA_LEDGER / DOMAIN_PLAN / Vertical Slice specification.
