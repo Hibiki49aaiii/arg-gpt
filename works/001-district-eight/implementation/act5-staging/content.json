@@ -1,0 +1,257 @@
+{
+  "act": 5,
+  "status": "staging-unlinked",
+  "runtime_connected": false,
+  "title": "Records / Reverse Citation / Saegusa",
+  "maps": {
+    "anchors": [
+      {
+        "id": "A",
+        "meaning": "river bend / bridge abutment",
+        "x": 0,
+        "y": 0
+      },
+      {
+        "id": "B",
+        "meaning": "old civic hall SW corner",
+        "x": 100,
+        "y": 0
+      },
+      {
+        "id": "C",
+        "meaning": "railway underpass center",
+        "x": 40,
+        "y": 80
+      }
+    ],
+    "versions": [
+      {
+        "id": "MAP-1997",
+        "date": "1997",
+        "label": "1997 市街地図 保存複写",
+        "target_feature": "absent"
+      },
+      {
+        "id": "MAP-1998-07",
+        "date": "1998-07",
+        "label": "1998年7月 市街地図 印刷複写",
+        "target_feature": "absent"
+      },
+      {
+        "id": "MAP-1998-09",
+        "date": "1998-09",
+        "label": "1998年9月 市街地図 保管原本",
+        "target_feature": "faint",
+        "line": [
+          [
+            57,
+            42
+          ],
+          [
+            62,
+            35
+          ]
+        ],
+        "confidence": "low"
+      },
+      {
+        "id": "MAP-2001",
+        "date": "2001",
+        "label": "2001 デジタル保存スキャン",
+        "target_feature": "clear",
+        "line": [
+          [
+            57,
+            42
+          ],
+          [
+            63,
+            34
+          ]
+        ],
+        "confidence": "high"
+      }
+    ],
+    "target_label_exposed": false,
+    "fixed_anchor_alignment_required": true,
+    "text_coordinate_route": true
+  },
+  "phonebook": {
+    "id": "EV-023",
+    "initial_copy": {
+      "year": 1998,
+      "waterless_slope_heading": false
+    },
+    "later_preserved_copy": {
+      "waterless_slope_heading": true
+    },
+    "real_phone_numbers": false
+  },
+  "photo": {
+    "id": "EV-022",
+    "required": false,
+    "reliability": "Unknown",
+    "ordinary_explanations": [
+      "crop difference",
+      "restoration artifact",
+      "negative mix-up",
+      "labeling error"
+    ]
+  },
+  "kiritani": {
+    "note_a": {
+      "id": "EV-024",
+      "title": "共同記憶同期に関する予備観察",
+      "missing_section": "4.3",
+      "missing_title": "記述量と新規再想起",
+      "early_model": "human_information_spread"
+    },
+    "reverse_citations": [
+      {
+        "id": "C-01",
+        "source": "§2.4",
+        "claim": "4.3区分Dで接触経路を確認できない新規回答者を再測定"
+      },
+      {
+        "id": "C-02",
+        "source": "§5.1",
+        "claim": "記録追加後の再測定で回答一致率が上昇し4.3表2を参照"
+      },
+      {
+        "id": "C-03",
+        "source": "Appendix B",
+        "claim": "記述量区分A-Dと新規再想起率の対応は4.3集計値"
+      },
+      {
+        "id": "C-04",
+        "source": "Margin Memo",
+        "claim": "D↑ → N(recall)↑ ? reverse direction not excluded"
+      }
+    ],
+    "note_b": {
+      "id": "EV-025",
+      "finding": "記述密度が高い対象ほど、その後の新規再想起率が高い",
+      "temporal_direction": "records_increase_before_later_new_recall",
+      "causality_proven": false,
+      "direct_human_spread_sufficient": false
+    }
+  },
+  "containment": {
+    "order": {
+      "id": "EV-026",
+      "date": "1998-09-03",
+      "actions": [
+        "proper_noun_searchability_reduction",
+        "document_access_restriction",
+        "precise_geography_redaction",
+        "cross_contact_reduction",
+        "public_explanation_standardization"
+      ]
+    },
+    "trend": {
+      "id": "EV-027",
+      "correlation_only": true,
+      "buckets": [
+        [
+          "1998-08-14/1998-08-16",
+          11
+        ],
+        [
+          "1998-08-17/1998-08-23",
+          18
+        ],
+        [
+          "1998-08-24/1998-08-30",
+          14
+        ],
+        [
+          "1998-08-31/1998-09-02",
+          7
+        ],
+        [
+          "1998-09-03/1998-09-09",
+          4
+        ],
+        [
+          "1998-09-10/1998-09-16",
+          2
+        ],
+        [
+          "1998-09-17/1998-09-30",
+          1
+        ]
+      ],
+      "confounders": [
+        "awareness changes",
+        "reporting fatigue",
+        "reduced interviews",
+        "ordinary decay",
+        "administrative filtering"
+      ]
+    }
+  },
+  "saegusa": {
+    "chronology": [
+      {
+        "year": 1999,
+        "id": "EV-028",
+        "action": "preserve",
+        "claim": "名簿から消したら、その人まで消したことになる。"
+      },
+      {
+        "year": 2005,
+        "id": "CTX-2005",
+        "action": "digitize_reorganize"
+      },
+      {
+        "year": 2007,
+        "id": "EV-029",
+        "action": "recurrence_concern"
+      },
+      {
+        "year": 2008,
+        "id": "EV-030",
+        "action": "voluntary_delete",
+        "batches": [
+          "2008-09-03",
+          "2008-09-07",
+          "2008-09-12"
+        ]
+      },
+      {
+        "year": 2009,
+        "id": "EV-031",
+        "action": "final_memo",
+        "claim": "残せば戻る。消せば彼らが消える。"
+      }
+    ],
+    "voluntary_deletion": true,
+    "retained": [
+      "broad incident chronology",
+      "some personal names",
+      "ethics notes"
+    ],
+    "deleted": [
+      "precise geographic references",
+      "high-resolution map scans",
+      "exact audio index",
+      "cross-linked name/place index"
+    ]
+  },
+  "act6_boundary": {
+    "complete_map_created": false,
+    "player_causality_revealed": false,
+    "current_municipal_area8_revealed": false,
+    "ending_choice_revealed": false
+  },
+  "player_facing_forbidden_terms": [
+    "プレイヤーが第八区を作る",
+    "完全地図を作ると現実が変わる",
+    "現在の防災ページに第8避難区が追加",
+    "調査が再発原因",
+    "ENDING",
+    "END-A",
+    "END-B",
+    "END-C"
+  ]
+}
