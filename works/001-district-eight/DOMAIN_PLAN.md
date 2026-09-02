@@ -91,7 +91,7 @@ use controlled domains / non-dialable placeholders during development.
 
 ## 5. Municipality Naming Gate
 
-「久代市」はworking name。
+「凪代市」はworking name。
 
 Before public release:
 - exact municipality name search
