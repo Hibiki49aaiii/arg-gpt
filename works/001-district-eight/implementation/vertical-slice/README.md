@@ -34,3 +34,7 @@ python3 works/001-district-eight/implementation/vertical-slice/validate.py
 - Recovery Route A/B/C
 
 このプロトタイプにはAct 2以降の真相を含めません。
+
+## CI
+
+GitHub Actions `.github/workflows/vertical-slice-validate.yml` で、リンク・Spoiler境界・Recovery Route・Act 1資料整合性を検証します。
