@@ -35,7 +35,8 @@ arg-gpt/
    │  ├─ MEDIA_LEDGER.md
    │  ├─ DOMAIN_PLAN.md
    │  ├─ VERTICAL_SLICE.md
-   │  └─ IMPLEMENTATION_PLAN.md
+   │  ├─ IMPLEMENTATION_PLAN.md
+   │  └─ FULL_STAGING_STATUS.md
    └─ 002-...
 ```
 
@@ -79,6 +80,18 @@ arg-gpt/
 - `works/001-district-eight/DOMAIN_PLAN.md`
 - `works/001-district-eight/VERTICAL_SLICE.md`
 - `works/001-district-eight/IMPLEMENTATION_PLAN.md`
+- `works/001-district-eight/FULL_STAGING_STATUS.md`
+
+### Implementation Status
+
+- Act 0–1 Vertical Slice: implemented / machine-validated
+- Act 2–6: isolated staging implemented / machine-validated
+- Full cross-act Engineering Readiness Gate: in progress
+- Human Blind Playtest: Issue #8 pending
+- Public runtime integration: blocked until Human Gate passes
+
+See:
+- `works/001-district-eight/FULL_STAGING_STATUS.md`
 
 ## Production Principles
 
