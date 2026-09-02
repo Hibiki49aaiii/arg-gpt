@@ -50,3 +50,12 @@ Useful direct entries:
 - `/radio/compare/1998-08-14/`
 
 Final recorded audio assets are intentionally out of scope for this staging pass. The waveform, duration, transcript-fragment, and alignment UI are sufficient to validate the narrative/puzzle structure.
+
+
+## Staging completion gate
+
+Issue #15 is complete only when the same pull request passes:
+- Act 3 Preproduction Validation
+- Vertical Slice Validation
+
+The human discovery gate remains separate in Issue #8.
