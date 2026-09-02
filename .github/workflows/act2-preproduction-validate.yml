@@ -1,0 +1,39 @@
+name: Act 2 Preproduction Validation
+
+on:
+  push:
+    paths:
+      - "works/001-district-eight/ACT2_*.md"
+      - "works/001-district-eight/implementation/act2-staging/**"
+      - ".github/workflows/act2-preproduction-validate.yml"
+  pull_request:
+    paths:
+      - "works/001-district-eight/ACT2_*.md"
+      - "works/001-district-eight/implementation/act2-staging/**"
+      - ".github/workflows/act2-preproduction-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-act2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Act 2 staging
+        run: python3 works/001-district-eight/implementation/act2-staging/validate_act2.py
+
+      - name: Ensure Act 2 is not linked from Vertical Slice
+        run: |
+          if grep -R --include='*.html' --include='*.js' --include='*.css' -nE 'act2-staging|documents/215|水城[[:space:]]*結' works/001-district-eight/implementation/vertical-slice/sites/old-bousai works/001-district-eight/implementation/vertical-slice/sites/archives; then
+            echo "Act 2 content leaked into current Vertical Slice"
+            exit 1
+          fi
