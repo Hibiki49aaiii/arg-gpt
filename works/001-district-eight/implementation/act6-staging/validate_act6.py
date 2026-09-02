@@ -328,7 +328,7 @@ for required in (
         fail(f"workspace DOM/content missing: {required}")
 
 # State adapter / canonical solve contract.
-for slot,landmark in canonical.items():
+for landmark,slot in canonical.items():
     if f"{slot}:'{landmark}'" not in app:
         fail(f"app canonical assignment missing: {slot}={landmark}")
 for required in (
