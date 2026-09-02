@@ -20,3 +20,18 @@ Source of Truth:
 - `EVIDENCE_LEDGER.md`
 - `PUZZLE_LEDGER.md`
 - `SITE_MAP.md`
+
+
+## CI
+
+`.github/workflows/act6-preproduction-validate.yml` verifies:
+- 6! constraint uniqueness
+- evidence support minimums
+- generated-vs-found map semantics
+- reality A/B fixture invariants
+- no-glitch state change
+- PZ-012 gating
+- END-A/B/C mechanical distinction
+- Human Gate #8 isolation
+
+Act 6 preproduction is complete only when both Act 6 validation and Vertical Slice regression pass on the same pull request.
