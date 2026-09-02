@@ -7,7 +7,7 @@ Do not deploy the literal placeholder hostnames.
 ## 0. Naming / Fiction Boundary
 
 Current municipality name:
-「久代市」は制作上の仮称。
+「凪代市」は制作上の仮称。
 
 Public release requirement:
 - 実在自治体と誤認されにくい名称を最終確認する
@@ -57,7 +57,7 @@ Ending Layer
 
 ---
 
-# 2. SITE-001 — 旧久代市防災情報ミラー
+# 2. SITE-001 — 旧凪代市防災情報ミラー
 
 ## Role
 Primary Trailhead / Act 0–1 / Act 6 callback.
@@ -134,7 +134,7 @@ PZ-001に失敗しても、
 
 ---
 
-# 3. SITE-002 — 久代市史料デジタルアーカイブ
+# 3. SITE-002 — 凪代市史料デジタルアーカイブ
 
 ## Role
 Administrative / historical evidence.
@@ -216,7 +216,7 @@ Final truthはこれに依存しない。
 
 ---
 
-# 4. SITE-003 — 久代市学校史資料室
+# 4. SITE-003 — 凪代市学校史資料室
 
 ## Role
 Humanize the event.
@@ -335,7 +335,7 @@ EV-031。
 
 ---
 
-# 6. SITE-005 — 久代地域ラジオ保存会
+# 6. SITE-005 — 凪代地域ラジオ保存会
 
 ## Role
 Independent technical evidence.
@@ -437,7 +437,7 @@ EV-026 / EV-027。
 
 ---
 
-# 8. SITE-007 — 現行久代市防災ページ
+# 8. SITE-007 — 現行凪代市防災ページ
 
 ## Role
 Reality Anchor / final horror.
