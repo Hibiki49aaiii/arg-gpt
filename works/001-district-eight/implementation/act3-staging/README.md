@@ -20,3 +20,12 @@ Source of Truth:
 - `TIMELINE.md`
 - `EVIDENCE_LEDGER.md`
 - `PUZZLE_LEDGER.md`
+
+
+## CI
+
+`.github/workflows/act3-preproduction-validate.yml` validates timing arithmetic, receiver independence, transcript leakage, accessibility equivalence, and isolation from earlier runtimes.
+
+Act 3 preproduction is complete only when:
+- Act 3 Preproduction Validation passes
+- Vertical Slice regression remains green
