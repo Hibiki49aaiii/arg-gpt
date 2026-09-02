@@ -71,7 +71,7 @@ A restored mirror of an old municipal disaster-information website.
 
 Suggested restoration notice:
 
-「旧久代市防災情報ページの保存データを閲覧用に復元しています。リンク切れ、画像欠落、文字化け等は元データ由来のものを含みます。」
+「旧凪代市防災情報ページの保存データを閲覧用に復元しています。リンク切れ、画像欠落、文字化け等は元データ由来のものを含みます。」
 
 Important:
 Do not say:
