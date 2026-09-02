@@ -23,3 +23,20 @@ The staging contract is subordinate to:
 ## CI
 
 `.github/workflows/act2-preproduction-validate.yml` verifies timeline ordering, identity keys, spoiler boundaries, and Human Gate isolation.
+
+
+## Local staging
+
+```bash
+python3 -m http.server 8100 --directory works/001-district-eight/implementation/act2-staging/site
+```
+
+Open:
+
+```text
+http://localhost:8100/
+```
+
+The staging site uses root-relative paths and is self-contained under this server root.
+
+Current Act 0–1 Vertical Slice remains a separate runtime and intentionally has no link to this staging site while Human Blind Playtest Issue #8 is pending.
