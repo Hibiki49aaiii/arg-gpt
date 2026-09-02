@@ -35,3 +35,36 @@ Source of Truth:
 - Human Gate #8 isolation
 
 Act 6 preproduction is complete only when both Act 6 validation and Vertical Slice regression pass on the same pull request.
+
+
+## Local staging
+
+```bash
+python3 -m http.server 8500 --directory works/001-district-eight/implementation/act6-staging/site
+```
+
+Open:
+
+```text
+http://localhost:8500/
+```
+
+Suggested staging flow:
+1. `/bousai-now/areas/` — baseline 1〜7
+2. `/old-bousai/disaster/areas/08/` — baseline missing
+3. `/workspace/` — solve PZ-011
+4. revisit both reality anchors
+5. return to `/workspace/`
+6. `/ending/` — choose persistence policy
+7. `/ending/result/` — inspect persistent result
+
+Development reset:
+`/meta/`
+
+## Staging completion gate
+
+Issue #28 is complete only when the same pull request passes:
+- Act 6 Preproduction Validation
+- Vertical Slice Validation
+
+Human Blind Playtest Issue #8 remains the runtime-integration gate.
