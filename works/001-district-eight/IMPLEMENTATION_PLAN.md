@@ -170,5 +170,10 @@ Metrics:
 - [x] EVIDENCE_LEDGER.md
 - [x] PUZZLE_LEDGER.md
 - [x] SITE_MAP.md
+- [x] MEDIA_LEDGER.md
+- [x] DOMAIN_PLAN.md
+- [x] VERTICAL_SLICE.md
 
-Next: MEDIA_LEDGER / DOMAIN_PLAN / Vertical Slice specification.
+Story / overall production architecture is now implementation-ready.
+
+Next implementation gate: finalize fictional municipality naming, then build the Act 0–1 Vertical Slice defined in VERTICAL_SLICE.md.
