@@ -1,0 +1,369 @@
+{
+  "act": 4,
+  "status": "staging-unlinked",
+  "runtime_connected": false,
+  "title": "Human Memory / Shared Geography",
+  "incident_date": "1998-08-14",
+  "diary": {
+    "owner": "水城 結",
+    "ordered_ids": [
+      "D-01",
+      "D-02",
+      "D-03",
+      "D-04",
+      "D-05",
+      "D-06",
+      "D-07",
+      "D-08",
+      "D-09",
+      "D-10"
+    ],
+    "initial_order": [
+      "D-08",
+      "D-02",
+      "D-10",
+      "D-04",
+      "D-01",
+      "D-06",
+      "D-09",
+      "D-03",
+      "D-05",
+      "D-07"
+    ],
+    "fragments": [
+      {
+        "id": "D-01",
+        "date": "1998-08-10",
+        "weekday": "Monday",
+        "phase": "before",
+        "text": "午前は部活。暑くてみんなだらだらしてた。帰りに図書館へ寄って、借りてた本を一冊延長した。お母さんが桃を買ってきてたので夜に食べた。",
+        "clues": [
+          "午前練習",
+          "図書館貸出更新"
+        ]
+      },
+      {
+        "id": "D-02",
+        "date": "1998-08-11",
+        "weekday": "Tuesday",
+        "phase": "before",
+        "text": "午後の練習は体育館の点検でなし。由佳と電話して、土曜のお祭りどうするか話した。お母さんに土曜日スーパー付き合ってと言われた。",
+        "clues": [
+          "体育館設備点検",
+          "土曜の祭り",
+          "土曜スーパー"
+        ]
+      },
+      {
+        "id": "D-03",
+        "date": "1998-08-13",
+        "weekday": "Thursday",
+        "phase": "before",
+        "text": "図書館の本を返してきた。返却日ぎりぎりだった。明日は夕方に市の試験放送があるらしい。土曜はお祭りだけど、混んでたら行かなくてもいいかな。",
+        "clues": [
+          "返却期限",
+          "明日試験放送",
+          "土曜祭り"
+        ]
+      },
+      {
+        "id": "D-04",
+        "date": "1998-08-14",
+        "weekday": "Friday",
+        "phase": "onset",
+        "text": "午前は家で宿題。夕方の試験放送、窓を閉めてても聞こえた。晩ごはん前、お母さんに変なことを言ったらしい。自分ではちゃんと覚えてる。水無坂の家に帰らないと、と思った。玄関の右下に細い傷があって、階段は三段目だけ少し音が違う。台所の窓は流しの左。書いてる今も、そこへ帰らないといけない感じがする。でも私は今、家にいる。",
+        "event_time": "19:10",
+        "event_quote": "水無坂の家に帰りたい"
+      },
+      {
+        "id": "D-05",
+        "date": "1998-08-15",
+        "weekday": "Saturday",
+        "phase": "early",
+        "text": "お母さんとスーパー。帰り、いつもの交差点で右に曲がりそうになった。水無坂へ行くならそっちだと思ったから。お母さんに言ったら「そんな道ないよ」と笑われた。笑われると、自分が間違ってる気がして少し安心する。",
+        "clues": [
+          "土曜スーパー",
+          "夏祭り"
+        ]
+      },
+      {
+        "id": "D-06",
+        "date": "1998-08-17",
+        "weekday": "Monday",
+        "phase": "spread",
+        "text": "午後、市の人に昨日からのことを聞かれた。私だけじゃなくて、同じあたりを知ってるっていう人がいるらしい。それを聞いたら安心するはずなのに、逆に怖くなった。時計塔のない公園で遊んだことも思い出す。真ん中に丸い跡だけある。誰と遊んだかも一人だけ名前が出てくる。でも、その名前は書かない。",
+        "facts": [
+          "他にも同地区を覚える人",
+          "時計塔のない公園",
+          "丸い跡",
+          "友人名は非開示"
+        ]
+      },
+      {
+        "id": "D-07",
+        "date": "1998-08-19",
+        "weekday": "Wednesday",
+        "phase": "classification",
+        "text": "また聞き取り。紙には「第八」と書いてあった。水無坂の話をすると担当の人が何度も同じところを聞く。帰ってから東三丁目のアルバムを見た。写真も部屋も全部知ってるのに、水無坂の家の階段の音まで知ってる。どっちかが嘘って感じがしない。",
+        "facts": [
+          "行政ラベル第八",
+          "東三丁目",
+          "二重記憶"
+        ]
+      },
+      {
+        "id": "D-08",
+        "date": "1998-08-24",
+        "weekday": "Monday",
+        "phase": "dual_home",
+        "text": "部活の子に久しぶりって言われた。普通に話してる間はいつもの自分だった。帰ると、東三丁目の家も水無坂の家も両方「帰る場所」みたいに思える。どっちかだけ本物だと言われると、もう片方の家族を自分で捨てるみたいで嫌だ。",
+        "facts": [
+          "両方の家がemotionally real"
+        ]
+      },
+      {
+        "id": "D-09",
+        "date": "1998-09-07",
+        "weekday": "Monday",
+        "phase": "decay",
+        "text": "今日、玄関の傷がどの高さだったか急に分からなくなった。台所の窓も、流しの左だったと思うけど自信がない。前なら目を閉じればすぐ出てきた。忘れた方がいいはずなのに、なくなっていくと焦る。",
+        "facts": [
+          "detail decay begins"
+        ]
+      },
+      {
+        "id": "D-10",
+        "date": "1998-09-14",
+        "weekday": "Monday",
+        "phase": "decay",
+        "text": "階段の三段目の音が、もう思い出せない。水無坂って字を見ると胸がぎゅっとするのに、家の中は前ほど浮かばない。ちょっと安心してる。たぶん。それと同じくらい、誰かの家を勝手に忘れてるみたいで寂しい。",
+        "facts": [
+          "mid-September decay",
+          "relief and grief"
+        ]
+      }
+    ],
+    "references": [
+      {
+        "id": "R-01",
+        "type": "club_schedule",
+        "entries": [
+          "1998-08-10 午前練習",
+          "1998-08-11 体育館設備点検のため休止",
+          "1998-08-17 午前練習",
+          "1998-08-24 午後練習"
+        ]
+      },
+      {
+        "id": "R-02",
+        "type": "library_slip",
+        "entries": [
+          "貸出更新 1998-08-10",
+          "返却期限 1998-08-13"
+        ]
+      },
+      {
+        "id": "R-03",
+        "type": "festival_flyer",
+        "entries": [
+          "東三丁目 夏祭り",
+          "1998-08-15 Saturday",
+          "17:00"
+        ]
+      },
+      {
+        "id": "R-04",
+        "type": "family_memo",
+        "entries": [
+          "土曜",
+          "夕方 スーパー",
+          "結も一緒"
+        ]
+      },
+      {
+        "id": "R-05",
+        "type": "municipal_notice",
+        "entries": [
+          "1998-08-14 Friday",
+          "18:00 防災行政無線 試験放送"
+        ]
+      }
+    ],
+    "external_lookup_required": false
+  },
+  "drawings": [
+    {
+      "id": "EV-018-A",
+      "date": "1998-08-15",
+      "school": "凪代市立東小学校",
+      "household": "A",
+      "viewpoint": "park looking uphill",
+      "visible": [
+        "PARK",
+        "ROUND_FOUNDATION",
+        "SLOPE",
+        "VENDING_MACHINE",
+        "BLUE_FENCE"
+      ],
+      "occluded": [
+        "TRIANGULAR_ROOF_HALL"
+      ]
+    },
+    {
+      "id": "EV-018-B",
+      "date": "1998-08-15",
+      "school": "凪代市立北小学校",
+      "household": "B",
+      "viewpoint": "mid-slope looking downhill",
+      "visible": [
+        "VENDING_MACHINE",
+        "PARK",
+        "ROUND_FOUNDATION",
+        "BLUE_FENCE"
+      ],
+      "occluded": [
+        "TRIANGULAR_ROOF_HALL"
+      ]
+    },
+    {
+      "id": "EV-018-C",
+      "date": "1998-08-18",
+      "school": "凪代市立臨海小学校",
+      "household": "C",
+      "viewpoint": "near hall looking downhill",
+      "visible": [
+        "TRIANGULAR_ROOF_HALL",
+        "BLUE_FENCE",
+        "VENDING_MACHINE",
+        "SLOPE"
+      ],
+      "occluded": [
+        "PARK",
+        "ROUND_FOUNDATION"
+      ]
+    }
+  ],
+  "topology": {
+    "nodes": [
+      "PARK",
+      "ROUND_FOUNDATION",
+      "SLOPE",
+      "VENDING_MACHINE",
+      "BLUE_FENCE",
+      "TRIANGULAR_ROOF_HALL"
+    ],
+    "relations": [
+      [
+        "PARK",
+        "contains",
+        "ROUND_FOUNDATION"
+      ],
+      [
+        "PARK",
+        "connects_uphill_to",
+        "SLOPE"
+      ],
+      [
+        "SLOPE",
+        "contains_midway",
+        "VENDING_MACHINE"
+      ],
+      [
+        "SLOPE",
+        "upper_end_near",
+        "BLUE_FENCE"
+      ],
+      [
+        "BLUE_FENCE",
+        "beyond",
+        "TRIANGULAR_ROOF_HALL"
+      ]
+    ],
+    "linear_projection": [
+      "PARK",
+      "VENDING_MACHINE",
+      "BLUE_FENCE",
+      "TRIANGULAR_ROOF_HALL"
+    ],
+    "compass_defined": false,
+    "scale_defined": false,
+    "real_city_coordinates_defined": false,
+    "complete_boundary_defined": false
+  },
+  "essay": {
+    "id": "EV-020",
+    "author": "真壁 俊",
+    "date": "1998-08-18",
+    "independent_of": [
+      "水城 結",
+      "EV-018-A",
+      "EV-018-B",
+      "EV-018-C"
+    ],
+    "text": [
+      "ぼくは時計のない公園に行きたいです。時計はないけど、まんなかに時計のあとみたいな丸いところがあります。",
+      "公園を出ると坂になっていて、途中にジュースの自動販売機があります。"
+    ],
+    "corroborates": [
+      [
+        "PARK",
+        "contains",
+        "ROUND_FOUNDATION"
+      ],
+      [
+        "PARK",
+        "connects_uphill_to",
+        "SLOPE"
+      ],
+      [
+        "SLOPE",
+        "contains_midway",
+        "VENDING_MACHINE"
+      ]
+    ]
+  },
+  "parent_summary": {
+    "id": "EV-019",
+    "reliability": "Biased",
+    "sole_proof_allowed": false,
+    "households": [
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  "partial_map": {
+    "title": "水無坂周辺 — 関係図（暫定）",
+    "label": "方角・縮尺・市内位置 不明",
+    "includes": [
+      "PARK",
+      "ROUND_FOUNDATION",
+      "SLOPE",
+      "VENDING_MACHINE",
+      "BLUE_FENCE",
+      "TRIANGULAR_ROOF_HALL"
+    ],
+    "complete": false
+  },
+  "accessibility": {
+    "image_independent_route": true,
+    "drawing_descriptions_require_synthesis": true,
+    "diary_keyboard_ordering": true
+  },
+  "act5_lead": {
+    "label": "旧市街地図Collection",
+    "prompt": "この並びは、凪代市のどこにあったことになっている？"
+  },
+  "player_facing_forbidden_terms": [
+    "地図が変化",
+    "地図が変わ",
+    "新しい道路線",
+    "電話帳が変",
+    "記述密度",
+    "再構築",
+    "現実改変",
+    "記録媒介",
+    "桐谷",
+    "三枝"
+  ]
+}
