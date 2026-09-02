@@ -1,0 +1,417 @@
+{
+  "act": 6,
+  "status": "staging-unlinked",
+  "runtime_connected": false,
+  "title": "The Missing Whole / Seven Became Eight / Endings",
+  "candidate_graph": {
+    "slots": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6"
+    ],
+    "edges": [
+      [
+        "S1",
+        "S2"
+      ],
+      [
+        "S2",
+        "S3"
+      ],
+      [
+        "S3",
+        "S4"
+      ],
+      [
+        "S4",
+        "S6"
+      ],
+      [
+        "S2",
+        "S5"
+      ]
+    ],
+    "main_route": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S6"
+    ],
+    "landmarks": [
+      "PARK",
+      "VENDING_MACHINE",
+      "BLUE_FENCE",
+      "OLD_EIGHT_MEETING_HALL",
+      "BUS_STOP",
+      "RESIDENTIAL_CLUSTER"
+    ],
+    "canonical_assignment": {
+      "PARK": "S1",
+      "VENDING_MACHINE": "S2",
+      "BLUE_FENCE": "S3",
+      "OLD_EIGHT_MEETING_HALL": "S4",
+      "BUS_STOP": "S5",
+      "RESIDENTIAL_CLUSTER": "S6"
+    },
+    "nested": {
+      "ROUND_FOUNDATION": "PARK"
+    },
+    "named_route": {
+      "name": "水無坂",
+      "slots": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S6"
+      ],
+      "generated_by_synthesis": true
+    }
+  },
+  "constraints": {
+    "act4_chain": {
+      "ordered_landmarks": [
+        "PARK",
+        "VENDING_MACHINE",
+        "BLUE_FENCE",
+        "OLD_EIGHT_MEETING_HALL"
+      ],
+      "must_be_consecutive_on_main_route": true,
+      "orientation_unknown": true
+    },
+    "distance_table": [
+      {
+        "a": "PARK",
+        "b": "BUS_STOP",
+        "distance": 2
+      },
+      {
+        "a": "BUS_STOP",
+        "b": "OLD_EIGHT_MEETING_HALL",
+        "distance": 3
+      },
+      {
+        "a": "OLD_EIGHT_MEETING_HALL",
+        "b": "RESIDENTIAL_CLUSTER",
+        "distance": 1
+      },
+      {
+        "a": "PARK",
+        "b": "RESIDENTIAL_CLUSTER",
+        "distance": 4
+      }
+    ],
+    "solution_count_required": 1
+  },
+  "supports": {
+    "PARK": [
+      "DRAWINGS_018",
+      "ESSAY_020",
+      "DIARY_016"
+    ],
+    "VENDING_MACHINE": [
+      "DRAWINGS_018",
+      "ESSAY_020"
+    ],
+    "BLUE_FENCE": [
+      "DRAWINGS_018",
+      "KIRITANI_SKETCH"
+    ],
+    "OLD_EIGHT_MEETING_HALL": [
+      "DRAWING_018C",
+      "EV-005",
+      "KIRITANI_DISTANCE"
+    ],
+    "BUS_STOP": [
+      "EV-021_TRANSPORT_SYMBOL",
+      "KIRITANI_DISTANCE"
+    ],
+    "RESIDENTIAL_CLUSTER": [
+      "EV-023_PHONEBOOK",
+      "EV-016_HOME_MEMORY",
+      "KIRITANI_DISTANCE"
+    ],
+    "WATERLESS_SLOPE_ROUTE": [
+      "EV-013_AUDIO",
+      "EV-016_DIARY",
+      "EV-023_PHONEBOOK"
+    ]
+  },
+  "support_minimums": {
+    "PARK": 2,
+    "VENDING_MACHINE": 2,
+    "BLUE_FENCE": 2,
+    "OLD_EIGHT_MEETING_HALL": 2,
+    "BUS_STOP": 2,
+    "RESIDENTIAL_CLUSTER": 2,
+    "WATERLESS_SLOPE_ROUTE": 3
+  },
+  "generated_artifact": {
+    "id": "EV-032",
+    "title": "第八避難区 / 水無坂周辺 — 統合復元図",
+    "artifact_type": "generated synthesis",
+    "complete_source_map_found": false,
+    "generated_during_investigation": true,
+    "required_copy": [
+      "この完成図と同一の資料は、現在確認されている1998年資料には存在しません。",
+      "各資料に分散していた位置関係を統合して作成したものです。"
+    ],
+    "placements": {
+      "S1": {
+        "landmark": "PARK",
+        "sources": [
+          "EV-018-A/B",
+          "EV-020"
+        ],
+        "confidence": "high"
+      },
+      "S2": {
+        "landmark": "VENDING_MACHINE",
+        "sources": [
+          "EV-018-A/B/C",
+          "EV-020"
+        ],
+        "confidence": "high"
+      },
+      "S3": {
+        "landmark": "BLUE_FENCE",
+        "sources": [
+          "EV-018-A/B/C",
+          "KIRITANI_SKETCH"
+        ],
+        "confidence": "high"
+      },
+      "S4": {
+        "landmark": "OLD_EIGHT_MEETING_HALL",
+        "sources": [
+          "EV-018-C",
+          "EV-005",
+          "KIRITANI_DISTANCE"
+        ],
+        "confidence": "high"
+      },
+      "S5": {
+        "landmark": "BUS_STOP",
+        "sources": [
+          "EV-021_TRANSPORT_SYMBOL",
+          "KIRITANI_DISTANCE"
+        ],
+        "confidence": "medium"
+      },
+      "S6": {
+        "landmark": "RESIDENTIAL_CLUSTER",
+        "sources": [
+          "EV-023",
+          "EV-016",
+          "KIRITANI_DISTANCE"
+        ],
+        "confidence": "medium"
+      }
+    },
+    "route_provenance": {
+      "name": "水無坂",
+      "sources": [
+        "EV-013",
+        "EV-016",
+        "EV-023"
+      ]
+    }
+  },
+  "state_machine": {
+    "initial": "MAP_INCOMPLETE",
+    "transitions": [
+      {
+        "from": "MAP_INCOMPLETE",
+        "event": "PZ011_SOLVED",
+        "to": "MAP_COMPLETE_UNOBSERVED",
+        "side_effect": "REALITY_B_ACTIVE"
+      },
+      {
+        "from": "MAP_COMPLETE_UNOBSERVED",
+        "event": "VISIT_SITE007_OR_SITE00108",
+        "to": "REALITY_CHANGE_OBSERVED"
+      },
+      {
+        "from": "REALITY_CHANGE_OBSERVED",
+        "event": "VISIT_BOTH_REALITY_ANCHORS",
+        "to": "PZ012_OBSERVED"
+      },
+      {
+        "from": "PZ012_OBSERVED",
+        "event": "ACKNOWLEDGE_RECONSTRUCTION_HAZARD",
+        "to": "ENDING_AVAILABLE"
+      }
+    ],
+    "ending_available_only_after": "PZ012_OBSERVED"
+  },
+  "fixtures": {
+    "site007": {
+      "path": "/bousai-now/areas/",
+      "shared": {
+        "title": "凪代市 防災・避難情報",
+        "header": "凪代市 防災・避難情報",
+        "nav": [
+          "避難区一覧",
+          "防災マップ",
+          "避難所検索"
+        ],
+        "css": "modern-municipal.css",
+        "last_updated": "2026-04-01"
+      },
+      "state_a": {
+        "rows": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "legend": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "state_b": {
+        "rows": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "legend": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "area8": {
+          "name": "第8避難区",
+          "site": "水無坂地域センター"
+        }
+      }
+    },
+    "site001_08": {
+      "path": "/old-bousai/disaster/areas/08/",
+      "shared": {
+        "css": "old-bousai.css",
+        "visual_era": "2003-era"
+      },
+      "state_a": {
+        "resolves": false,
+        "title": "保存ページなし｜旧凪代市防災情報",
+        "copy": "保存ページを確認できません"
+      },
+      "state_b": {
+        "resolves": true,
+        "title": "第8避難区｜旧凪代市防災情報",
+        "update_date": "平成15年4月1日",
+        "designated_site": "旧八号集会所",
+        "copy": "災害発生時は地区責任者の指示に従い、指定集合場所へ移動してください。"
+      }
+    }
+  },
+  "pz012": {
+    "required_reality_anchors": [
+      "SITE-007",
+      "SITE-001/08"
+    ],
+    "optional_hint_1": "ここまでの資料と、最初に基準にしたページを比較してください。",
+    "optional_hint_2": "現在の避難区一覧と、旧サイトの08ページをもう一度確認してください。",
+    "post_observation_copy": "これらのページは、復元図作成前に保存した基準状態と一致しません。",
+    "popup_allowed": false
+  },
+  "ending_gate": {
+    "required_state": "PZ012_OBSERVED",
+    "screen_title": "保存方針",
+    "intro": "統合復元図は、複数資料を横断して作成した新しい記録です。保存範囲を選択してください。",
+    "choices": [
+      {
+        "id": "END-A",
+        "action": "完全復元資料を公開状態で保持する"
+      },
+      {
+        "id": "END-B",
+        "action": "復元キーと精密地理を破棄する"
+      },
+      {
+        "id": "END-C",
+        "action": "人物記録を残し、精密地理を非公開化する"
+      }
+    ]
+  },
+  "endings": {
+    "END-A": {
+      "people": "full",
+      "incident": "full",
+      "complete_geography": "public",
+      "exact_audio": "available",
+      "cross_index": "full",
+      "site007": "B",
+      "site001_08": "B",
+      "implication": "search result count and cross-links continue increasing"
+    },
+    "END-B": {
+      "people": "mostly_redacted",
+      "incident": "minimal",
+      "complete_geography": "destroyed",
+      "exact_audio": "removed",
+      "cross_index": "removed",
+      "site007": "A",
+      "site001_08": "A",
+      "implication": "a remembered person/place becomes harder to verify"
+    },
+    "END-C": {
+      "people": "preserved",
+      "incident": "preserved",
+      "complete_geography": "suppressed_or_destroyed",
+      "exact_audio": "removed",
+      "cross_index": "removed",
+      "site007": "A",
+      "site001_08": "A",
+      "implication": "containment boundary preserves people/history but not precise geography",
+      "final_line": "忘れないために、思い出してはいけないことがある。"
+    }
+  },
+  "no_glitch_forbidden": [
+    "glitch",
+    "ANOMALY DETECTED",
+    "danger",
+    "warning red",
+    "flicker",
+    "scanline",
+    "distortion",
+    "jumpscare",
+    "new area",
+    "restored"
+  ],
+  "player_facing_forbidden_labels": [
+    "GOOD ENDING",
+    "BAD ENDING",
+    "TRUE ENDING",
+    "正解",
+    "推奨"
+  ],
+  "human_gate": {
+    "issue": 8,
+    "required_before_runtime_integration": true
+  }
+}
