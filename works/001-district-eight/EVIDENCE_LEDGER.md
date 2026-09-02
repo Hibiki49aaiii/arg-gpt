@@ -59,7 +59,7 @@ Reliability:
 ## EV-001 現行避難区一覧
 
 Visible Fact:
-久代市の避難区は第1〜第7。
+凪代市の避難区は第1〜第7。
 
 Hidden Meaning:
 第八区は現行制度に存在しない。
