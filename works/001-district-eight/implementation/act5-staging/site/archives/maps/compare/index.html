@@ -1,0 +1,28 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>旧市街地図 固定基準点比較</title><link rel="stylesheet" href="/styles.css"></head>
+<body><div class="shell"><header class="header"><h1>凪代市史料デジタルアーカイブ</h1><p>旧市街地図 固定基準点比較</p></header>
+<nav class="nav"><a href="/archives/maps/">地図一覧</a><a href="/archives/phonebook/">電話帳索引</a><a href="/research/">研究資料</a></nav>
+<main data-map-compare>
+<h2>PZ-008 — Fixed Anchor Registration</h2>
+<p>4版を同一座標系に置くには、変化していない3つの地物を基準にします。</p>
+<div class="controls">
+<label>Marker A<select id="anchor-a"><option value="">選択</option><option value="river">河川屈曲部・橋台</option><option value="civic">旧市民会館南西角</option><option value="railway">鉄道アンダーパス中心</option></select></label>
+<label>Marker B<select id="anchor-b"><option value="">選択</option><option value="river">河川屈曲部・橋台</option><option value="civic">旧市民会館南西角</option><option value="railway">鉄道アンダーパス中心</option></select></label>
+<label>Marker C<select id="anchor-c"><option value="">選択</option><option value="river">河川屈曲部・橋台</option><option value="civic">旧市民会館南西角</option><option value="railway">鉄道アンダーパス中心</option></select></label>
+<button type="button" data-lock-map>基準点を登録</button>
+</div>
+<p data-map-status aria-live="polite"></p>
+<section data-map-solved hidden>
+<div class="good"><h2>同一座標系での差分</h2>
+<table><thead><tr><th>版</th><th>固定点</th><th>Target zone</th><th>座標情報</th></tr></thead><tbody>
+<tr><td>1997</td><td>A/B/C一致</td><td>線なし</td><td>—</td></tr>
+<tr><td>1998-07</td><td>A/B/C一致</td><td>線なし</td><td>—</td></tr>
+<tr><td>1998-09</td><td>A/B/C一致</td><td>薄い線</td><td>(57,42) → (62,35), low confidence</td></tr>
+<tr><td>2001</td><td>A/B/C一致</td><td>より明瞭な線</td><td>(57,42) → (63,34), high confidence</td></tr>
+</tbody></table>
+<p>周辺の固定基準点は一致したまま、同一区画の保存版だけに差があります。</p>
+<p class="muted">この差だけで原因は確定できません。</p>
+<p><a href="/archives/phonebook/">別媒体の版差分を見る</a></p>
+</div>
+</section>
+<div class="note"><h3>Text-only route</h3><p>Anchor A=(0,0), B=(100,0), C=(40,80)。基準点登録後、上の座標表だけで同じ比較が可能です。</p></div>
+</main><footer>PZ-008 staging</footer></div><script src="/app.js"></script></body></html>
