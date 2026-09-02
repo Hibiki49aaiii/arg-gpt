@@ -281,7 +281,7 @@ A mundane archive cross-reference can state:
 ```text
 関連文書:
 8月14日照会記録
-資料区分: 防災無線・市民照会
+資料区分: 市民照会
 公開準備中
 ```
 
