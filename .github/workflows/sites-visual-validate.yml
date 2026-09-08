@@ -1,0 +1,94 @@
+name: Sites Visual Bundle Validation
+
+on:
+  push:
+    branches:
+      - codex-district-eight-sites
+    paths:
+      - 'dist/**'
+      - '.openai/hosting.json'
+      - '.github/workflows/sites-visual-validate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate static bundle and SVG assets
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          import re
+          import xml.etree.ElementTree as ET
+
+          root = Path('.')
+          html_path = root / 'dist' / 'index.html'
+          hosting_path = root / '.openai' / 'hosting.json'
+          assets_dir = root / 'dist' / 'assets'
+          expected = [
+              'nagishiro-seal.svg',
+              'evacuation-map.svg',
+              'archive-index.svg',
+              'document-scan.svg',
+              'radio-cassette.svg',
+              'diary-fragment.svg',
+              'reconstruction-map.svg',
+          ]
+
+          assert html_path.is_file(), 'dist/index.html missing'
+          assert hosting_path.is_file(), '.openai/hosting.json missing'
+          assert assets_dir.is_dir(), 'dist/assets missing'
+
+          hosting = json.loads(hosting_path.read_text(encoding='utf-8'))
+          assert hosting.get('project_id') == 'appgprj_6a9836915bf48191bd2d504f8ac6c46e', 'unexpected Sites project id'
+          assert hosting.get('static', {}).get('directory') == 'dist', 'unexpected static directory'
+
+          html = html_path.read_text(encoding='utf-8')
+          required_text = [
+              'これはフィクション作品です。',
+              'district8-sites-bundle-v1',
+              '第八避難区',
+              '水無坂',
+          ]
+          for text in required_text:
+              assert text in html, f'missing required text: {text}'
+
+          for name in expected:
+              path = assets_dir / name
+              assert path.is_file(), f'missing asset: {name}'
+              ET.parse(path)
+              assert f'assets/{name}' in html, f'asset not referenced by index: {name}'
+
+          refs = sorted(set(re.findall(r'assets/([A-Za-z0-9._-]+\.svg)', html)))
+          assert refs == sorted(expected), f'unexpected SVG reference set: {refs}'
+
+          scripts = re.findall(r'<script>(.*?)</script>', html, flags=re.S)
+          assert len(scripts) == 1, f'expected exactly one inline script, got {len(scripts)}'
+          Path('/tmp/district-eight.js').write_text(scripts[0], encoding='utf-8')
+
+          assert html.count('<style>') == 1 and html.count('</style>') == 1, 'style block mismatch'
+          assert html.count('<script>') == html.count('</script>') == 1, 'script block mismatch'
+          assert html.count('<main') == 1 and html.count('</main>') == 1, 'main landmark mismatch'
+
+          print('Sites project:', hosting['project_id'])
+          print('SVG assets:', len(expected))
+          print('SVG references:', len(refs))
+          print('Static bundle validation: PASS')
+          PY
+
+      - name: Validate JavaScript syntax
+        run: node --check /tmp/district-eight.js
+
+      - name: Verify expected Sites package footprint
+        shell: bash
+        run: |
+          count=$((1 + $(find dist -type f | wc -l)))
+          echo "Expected Sites package files: $count"
+          test "$count" -eq 9
