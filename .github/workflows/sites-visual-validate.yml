@@ -92,3 +92,97 @@ jobs:
           count=$((1 + $(find dist -type f | wc -l)))
           echo "Expected Sites package files: $count"
           test "$count" -eq 9
+
+      - name: Install Chromium smoke-test runtime
+        shell: bash
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Run desktop and mobile browser smoke
+        shell: bash
+        run: |
+          python3 -m http.server 8080 --directory dist >/tmp/district-eight-server.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8080/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node <<'JS'
+          const { chromium } = require('playwright');
+          const assert = require('node:assert/strict');
+
+          const baseState = {
+            area: true, found: true, zero: true,
+            doc214: true, doc216: true, gap: true,
+            person: true, radio: true, diary: true, map: true,
+            old: true, now: true, ending: ''
+          };
+
+          const profiles = [
+            { name: 'desktop', viewport: { width: 1440, height: 1000 } },
+            { name: 'mobile', viewport: { width: 390, height: 844 } },
+          ];
+
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            for (const profile of profiles) {
+              const page = await browser.newPage({ viewport: profile.viewport });
+              const errors = [];
+              page.on('pageerror', err => errors.push(`pageerror: ${err.message}`));
+              page.on('console', msg => {
+                if (msg.type() === 'error') errors.push(`console: ${msg.text()}`);
+              });
+              page.on('response', res => {
+                if (res.status() >= 400) errors.push(`http ${res.status()}: ${res.url()}`);
+              });
+
+              await page.goto('http://127.0.0.1:8080/#home', { waitUntil: 'networkidle' });
+              await page.waitForSelector('.card-link');
+
+              const homeAssets = await page.evaluate(() => ({
+                mast: getComputedStyle(document.querySelector('.mast'), '::before').backgroundImage,
+                cards: Array.from(document.querySelectorAll('.card-link')).map(el => getComputedStyle(el, '::before').backgroundImage),
+                disclaimer: document.querySelector('footer')?.textContent || '',
+              }));
+              assert.match(homeAssets.mast, /nagishiro-seal\.svg/);
+              assert.equal(homeAssets.cards.length, 4);
+              assert.match(homeAssets.cards[0], /evacuation-map\.svg/);
+              assert.match(homeAssets.cards[1], /archive-index\.svg/);
+              assert.match(homeAssets.cards[2], /document-scan\.svg/);
+              assert.match(homeAssets.cards[3], /radio-cassette\.svg/);
+              assert.match(homeAssets.disclaimer, /フィクション作品/);
+
+              await page.evaluate(state => {
+                localStorage.setItem('district8-sites-bundle-v1', JSON.stringify(state));
+              }, baseState);
+
+              await page.goto('http://127.0.0.1:8080/#diary', { waitUntil: 'networkidle' });
+              await page.waitForSelector('.school .fragments');
+              const diaryAsset = await page.evaluate(() => getComputedStyle(document.querySelector('.school .fragments'), '::before').backgroundImage);
+              assert.match(diaryAsset, /diary-fragment\.svg/);
+
+              await page.goto('http://127.0.0.1:8080/#map', { waitUntil: 'networkidle' });
+              await page.waitForSelector('.research .landmarks');
+              const mapAsset = await page.evaluate(() => getComputedStyle(document.querySelector('.research .landmarks'), '::before').backgroundImage);
+              assert.match(mapAsset, /reconstruction-map\.svg/);
+
+              await page.screenshot({ path: `qa-${profile.name}.png`, fullPage: true });
+              assert.deepEqual(errors, [], `browser errors for ${profile.name}:\n${errors.join('\n')}`);
+              await page.close();
+              console.log(`${profile.name} browser smoke: PASS`);
+            }
+            await browser.close();
+          })().catch(err => {
+            console.error(err);
+            process.exit(1);
+          });
+          JS
+
+      - name: Upload visual QA screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: sites-visual-qa
+          path: |
+            qa-desktop.png
+            qa-mobile.png
+          if-no-files-found: error
