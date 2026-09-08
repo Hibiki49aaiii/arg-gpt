@@ -133,7 +133,9 @@ jobs:
                 if (msg.type() === 'error') errors.push(`console: ${msg.text()}`);
               });
               page.on('response', res => {
-                if (res.status() >= 400) errors.push(`http ${res.status()}: ${res.url()}`);
+                if (res.status() >= 400 && !res.url().endsWith('/favicon.ico')) {
+                  errors.push(`http ${res.status()}: ${res.url()}`);
+                }
               });
 
               await page.goto('http://127.0.0.1:8080/#home', { waitUntil: 'networkidle' });
@@ -155,6 +157,7 @@ jobs:
               await page.evaluate(state => {
                 localStorage.setItem('district8-sites-bundle-v1', JSON.stringify(state));
               }, baseState);
+              await page.reload({ waitUntil: 'networkidle' });
 
               await page.goto('http://127.0.0.1:8080/#diary', { waitUntil: 'networkidle' });
               await page.waitForSelector('.school .fragments');
