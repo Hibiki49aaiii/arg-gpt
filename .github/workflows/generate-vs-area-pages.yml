@@ -1,0 +1,67 @@
+name: Generate Vertical Slice Area Pages
+
+on:
+  push:
+    branches:
+      - codex-district-eight-sites
+    paths:
+      - 'tools/generate_vs_area_pages.py'
+      - '.github/workflows/generate-vs-area-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex-district-eight-sites
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate ordinary area pages
+        run: python tools/generate_vs_area_pages.py
+
+      - name: Validate area-page structure
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root = Path('dist/assets/vs')
+          for n in range(1, 8):
+              p = root / 'areas' / f'{n:02d}' / 'index.html'
+              assert p.is_file(), p
+              text = p.read_text(encoding='utf-8')
+              assert f'地区 {n:02d}' in text
+              assert 'これはフィクション作品内の架空自治体ページです。' in text
+          assert not (root / 'areas' / '08' / 'index.html').exists()
+          assert (root / 'contact.html').is_file()
+          contact = (root / 'contact.html').read_text(encoding='utf-8')
+          assert 'example.invalid' in contact
+          assert '000-000-0000' in contact
+          backup = (root / 'backup-index.txt').read_text(encoding='utf-8')
+          assert 'areas/07/index.html  SAVED' in backup
+          assert 'areas/08/index.html  MISSING' in backup
+          site = Path('dist/index.html').read_text(encoding='utf-8')
+          assert 'assets/vs/areas/01/index.html' in site
+          assert 'assets/vs/contact.html' in site
+          print('VS area-page validation: PASS')
+          PY
+
+      - name: Commit generated area pages
+        shell: bash
+        run: |
+          if git diff --quiet -- dist/index.html dist/assets/vs; then
+            echo 'No generated changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dist/index.html dist/assets/vs
+          git commit -m 'feat(site): add ordinary district pages and real missing 08 path'
+          git push origin HEAD:codex-district-eight-sites
