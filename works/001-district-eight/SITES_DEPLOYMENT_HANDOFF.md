@@ -10,7 +10,7 @@ Status: READY FOR SITES DEPLOYMENT
 - slugを変更しない
 - ARGのストーリー／状態機械／分岐を再設計しない
 - mainへマージすることを公開条件にしない
-- `dist/index.html` のJavaScriptを変更しない
+- `dist/index.html` の既存状態機械を置き換えない
 - 既存のproduction URLを変更しない
 
 ## 2. Source of Truth
@@ -21,16 +21,19 @@ Repository:
 Branch:
 `codex-district-eight-sites`
 
-Deployment source HEAD at handoff creation:
-`addd2fdd61f4e512a046c783c33a0369f62ae0cf`
+Reviewed production payload commit:
+`cc01d0dfbbed15d9db6680310452552c416769cb`
 
-Visual payload HTML blob:
-`dist/index.html` = `0defa2376386ccd033f4c88f4b97b6aa55a4807b`
+21-file validation workflow commit:
+`60b6b5dae7f3c362b23c76c046736518b57ba490`
 
-Latest reconstruction-map asset blob:
+Current production HTML blob after Vertical Slice media integration:
+`dist/index.html` = `6d3c07e3d2d9b6128230764f354cf02e1db3f281`
+
+Reconstruction-map asset blob:
 `dist/assets/reconstruction-map.svg` = `79f278f49c239d348f3506e28138702cf0289f1f`
 
-Before deployment, re-fetch branch HEAD. If it differs from the value above, review the later diff before publishing. Do not silently publish an unknown later commit.
+The branch may contain later documentation-only handoff commits. Before deployment, re-fetch branch HEAD and review later diffs. The publishable `dist/` payload must correspond to the reviewed media payload above or an explicitly reviewed successor.
 
 ## 3. Existing Sites Project
 
@@ -47,7 +50,7 @@ Production URL:
 
 ## 4. Expected Official Package
 
-Expected total Sites package file count: **9**
+Expected total Sites package file count: **21**
 
 Required files:
 1. `.openai/hosting.json`
@@ -59,12 +62,28 @@ Required files:
 7. `dist/assets/radio-cassette.svg`
 8. `dist/assets/diary-fragment.svg`
 9. `dist/assets/reconstruction-map.svg`
+10. `dist/assets/vs/area_01.png`
+11. `dist/assets/vs/area_02.png`
+12. `dist/assets/vs/area_03.png`
+13. `dist/assets/vs/area_04.png`
+14. `dist/assets/vs/area_05.png`
+15. `dist/assets/vs/area_06.png`
+16. `dist/assets/vs/area_07.png`
+17. `dist/assets/vs/backup-index.txt`
+18. `dist/assets/vs/h10_summer_disaster_plan.pdf`
+19. `dist/assets/vs/h10_water_points.pdf`
+20. `dist/assets/vs/pdf-metadata.html`
+21. `dist/assets/vs/update-history.html`
 
-**Abort deployment if the Sites package contains fewer than 9 files.**
+`dist/assets/vs/area_08.png` **must not exist**. Its absence is an intentional clue and is preserved in `backup-index.txt` as `MISSING`.
 
-## 5. Visual Payload
+**Abort deployment if the official package file count is not exactly 21.**
 
-The production visual pass includes:
+## 5. Visual / Evidence Payload
+
+Production now includes two layers.
+
+### Archival visual layer
 - fictional Nagishiro municipal archive seal
 - evacuation district map graphic
 - municipal archive index graphic
@@ -73,114 +92,155 @@ The production visual pass includes:
 - Yui Mizuki diary-fragment graphic
 - District Eight reconstruction-map graphic
 - archival paper / FAX / scan / cassette / notebook visual treatment
-- distinct 2026 current-site presentation
 
-The assets are original fictional project graphics. They do not reproduce a real municipal seal, real emergency map, or real emergency instructions.
+### Vertical Slice evidence media
+- common `area_01.png`–`area_07.png` filename/image rule
+- intentionally missing `area_08.png`
+- backup index retaining the broken 08 reference
+- 10-page `平成10年夏季防災計画` PDF
+- 3-page `給水地点一覧` PDF containing `旧八号集会所`
+- browser-readable PDF metadata page
+- ordinary old-site update history from 1998–2004
+- production UI links to the above assets at spoiler-appropriate routes
 
-## 6. Validation Already Completed
+All new assets are original fictional project media. They do not reproduce a real municipal seal, real emergency map, real contact information, or real emergency instructions.
+
+## 6. Reproducible Media Generation
+
+Generator:
+`tools/generate_vs_assets.py`
+
+Generation workflow:
+`.github/workflows/generate-vs-media.yml`
+
+Generator Run #1:
+ID `34344292717`
+Result: **SUCCESS**
+
+Generated asset commit:
+`cc01d0dfbbed15d9db6680310452552c416769cb`
+
+The generator validates:
+- 7 PNG icons exist and are valid PNGs
+- `area_08.png` stays absent
+- disaster-plan PDF = 10 pages with expected metadata
+- water-points PDF = 3 pages with expected metadata
+- backup index contains the missing 08 entries
+- all new evidence links are injected into `dist/index.html`
+
+## 7. Validation Already Completed
 
 GitHub Actions workflow:
 `.github/workflows/sites-visual-validate.yml`
 
-Latest validation run at handoff creation:
-Run #4 / ID `34288908516`
-
+Latest validation:
+Run #5 / ID `34344454607`
 Result: **SUCCESS**
 
 Passed:
 - hosting project id check
 - static directory check
-- expected 9-file package footprint
-- 7/7 SVG existence
-- 7/7 SVG XML parse
-- all SVG references resolved from `index.html`
-- no unexpected SVG reference
+- exact **21-file** package footprint
+- 7/7 original SVG existence and XML parse
+- all original SVG references resolved
+- 12/12 Vertical Slice evidence-media files present
+- PNG signatures valid for area 01–07
+- `area_08.png` confirmed absent
+- PDF signatures valid
+- backup-index missing-08 markers present
+- PDF metadata page and fiction disclaimer present
+- update-history ordinary-content range present
+- production UI links to VS assets present
 - inline JavaScript extraction
 - `node --check` JavaScript syntax
-- required fiction-boundary strings
 - desktop Chromium `1440x1000`
 - mobile Chromium `390x844`
+- home / areas / archive / diary / reconstruction-map routes
+- direct HTTP 200 checks for all new linked evidence assets
+- direct HTTP 404 check for intentionally absent `area_08.png`
 - no page error
 - no console error
-- no unexpected HTTP >=400 response
-- home visual asset application
-- diary visual asset application
-- reconstruction-map visual asset application
+- no unexpected page HTTP >=400 response
 
 Latest QA artifact:
-- artifact id: `10080573294`
+- artifact id: `10101096713`
 - name: `sites-visual-qa`
-- digest: `sha256:54e82b2842f2210c640b6fb36f3a8244409322df6bd877a54af5ff551e7b8872`
+- digest: `sha256:85f2672f5f40bff4e44750debccadb54b7e6ba501c8571923a8c8f5497f5eeac`
 
-The QA screenshots were manually reviewed after Run #4. Desktop and mobile layouts are visually coherent and the reconstruction-map preview keeps all six major landmarks inside the visible safe region.
-
-## 7. Required Sites Lifecycle
+## 8. Required Sites Lifecycle
 
 Execute using the existing Sites project only:
 
 1. Re-fetch `codex-district-eight-sites` HEAD.
-2. Confirm the intended source commit/diff.
+2. Review commits after `60b6b5dae7f3c362b23c76c046736518b57ba490`; documentation-only changes are acceptable, but unknown `dist/` changes require review.
 3. Open/reuse Sites project `appgprj_6a9836915bf48191bd2d504f8ac6c46e`.
 4. Push/checkpoint the repository source into the existing Sites checkout.
-5. Confirm Sites-side source commit corresponds to the reviewed GitHub source.
+5. Confirm Sites-side source corresponds to the reviewed GitHub source.
 6. Generate/inspect the official package.
-7. Require official package file count = **9**.
-8. Confirm all seven `dist/assets/*.svg` files exist in the Sites package.
-9. Save a new Sites version.
-10. Deploy that version to production.
-11. Poll deployment until terminal success.
-12. Obtain/confirm production URL.
-13. Open the production URL and perform final visual verification.
+7. Require official package file count = **21**.
+8. Confirm all 7 root SVG assets and all 12 `dist/assets/vs/` files exist.
+9. Confirm `dist/assets/vs/area_08.png` is absent.
+10. Save a new Sites version.
+11. Deploy that version to production.
+12. Poll deployment until terminal success.
+13. Confirm production URL.
+14. Open production and perform final visual/evidence verification.
 
-## 8. Production Verification
+## 9. Production Verification
 
 At `https://district-eight.era-0k.chatgpt.site`, verify at minimum:
 
 ### Home
-- Nagishiro archive seal visible in masthead
+- Nagishiro archive seal visible
 - four graphical archive cards visible
 - fiction disclaimer visible
+- old-site update-history link works
 
-### Documents
-- scanned-document treatment visible
-- no JavaScript/runtime error
+### Areas
+- filename-rule note appears
+- `area_01.png` opens
+- backup index opens
+- backup index records `area_08.png MISSING`
 
-### Radio
-- cassette/recording visual treatment visible
+### Archive search `08`
+- `平成10年夏季防災計画` opens
+- `給水地点一覧` opens
+- PDF metadata page opens
+- evidence does not expose later-act spoilers beyond Vertical Slice boundaries
 
-### Diary
-- diary-fragment visual present
-
-### Reconstruction Map
-- all six landmarks visible in preview graphic
-- generated reconstruction map below remains functional
+### Documents / Radio / Diary / Map
+- existing scan/cassette/diary/map visual treatments remain intact
+- JavaScript state progression remains functional
+- all six reconstruction landmarks remain visible
 
 ### Responsive
-- desktop layout coherent around 1440px width
-- mobile layout coherent around 390px width
-- navigation remains usable horizontally on mobile
+- desktop coherent around 1440px width
+- mobile coherent around 390px width
+- horizontal mobile navigation remains usable
 
-## 9. Failure Conditions
+## 10. Failure Conditions
 
 Do not mark deployment complete if any of the following occurs:
-- package file count < 9
-- any SVG missing
+- official package file count != 21
+- any required SVG or VS asset missing
+- `area_08.png` unexpectedly exists
 - Sites source does not correspond to reviewed GitHub source
 - deployment terminal state is not success
-- production URL still renders the pre-graphics 2-file version
+- production still renders the old 2-file/9-file version
+- any new PDF/TXT/HTML evidence link returns an error
 - JavaScript state progression breaks
 - fiction disclaimer disappears
 
-## 10. Completion Recording
+## 11. Completion Recording
 
 After successful production verification, update GitHub Issue #34 with:
 - Sites source commit SHA
 - GitHub source HEAD used
 - `dist/index.html` blob SHA
-- official package file count
+- official package file count = 21
 - Sites version number / version id
 - deployment result
 - production URL
-- final visual QA PASS
+- final visual/evidence QA PASS
 
 Then close Issue #34 as completed.
