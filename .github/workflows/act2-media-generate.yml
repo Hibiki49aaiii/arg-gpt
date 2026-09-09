@@ -1,0 +1,66 @@
+name: Act 2 Staging Media Generate
+
+on:
+  push:
+    branches:
+      - codex-district-eight-sites
+    paths:
+      - 'works/001-district-eight/implementation/act2-staging/generate_act2_media.py'
+      - 'works/001-district-eight/implementation/act2-staging/validate_act2_media.py'
+      - '.github/workflows/act2-media-generate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex-district-eight-sites
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install media dependencies
+        run: pip install reportlab==4.4.3 pymupdf==1.26.4 pillow==11.3.0 pypdf==6.0.0
+
+      - name: Snapshot public payload
+        shell: bash
+        run: git rev-parse HEAD:dist > /tmp/dist-tree-before
+
+      - name: Generate Act 2 staging media
+        run: python works/001-district-eight/implementation/act2-staging/generate_act2_media.py
+
+      - name: Validate existing Act 2 staging
+        run: python works/001-district-eight/implementation/act2-staging/validate_act2.py
+
+      - name: Validate Act 2 media semantics and isolation
+        run: python works/001-district-eight/implementation/act2-staging/validate_act2_media.py
+
+      - name: Assert public dist is untouched
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD:dist)" = "$(cat /tmp/dist-tree-before)"
+          test -z "$(git status --porcelain -- dist)"
+
+      - name: Commit staging media only
+        shell: bash
+        run: |
+          scope='works/001-district-eight/implementation/act2-staging'
+          if git diff --quiet -- "$scope"; then
+            echo 'No generated changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$scope/site" "$scope/generate_act2_media.py" "$scope/validate_act2_media.py"
+          if ! git diff --cached --quiet -- dist; then
+            echo 'ERROR: dist change staged by Act 2 workflow'
+            exit 1
+          fi
+          git commit -m 'feat(act2): add staging administrative and school evidence media'
+          git push origin HEAD:codex-district-eight-sites
