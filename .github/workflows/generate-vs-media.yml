@@ -1,0 +1,86 @@
+name: Generate Vertical Slice Media
+
+on:
+  push:
+    branches:
+      - codex-district-eight-sites
+    paths:
+      - 'tools/generate_vs_assets.py'
+      - '.github/workflows/generate-vs-media.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex-district-eight-sites
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install media generation dependencies
+        run: pip install reportlab==4.4.3 pillow==11.3.0 pypdf==6.0.0
+
+      - name: Generate VS media and patch production index
+        run: python tools/generate_vs_assets.py
+
+      - name: Validate generated media
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          from pypdf import PdfReader
+
+          root = Path('dist/assets/vs')
+          for n in range(1, 8):
+              p = root / f'area_{n:02d}.png'
+              assert p.is_file(), p
+              with Image.open(p) as im:
+                  assert im.size == (96, 72), (p, im.size)
+                  assert im.format == 'PNG', (p, im.format)
+          assert not (root / 'area_08.png').exists(), 'area_08.png must stay missing'
+
+          plan = PdfReader(root / 'h10_summer_disaster_plan.pdf')
+          water = PdfReader(root / 'h10_water_points.pdf')
+          assert len(plan.pages) == 10, len(plan.pages)
+          assert len(water.pages) == 3, len(water.pages)
+          assert plan.metadata.title == '平成10年夏季防災計画'
+          assert water.metadata.title == '給水地点一覧'
+
+          backup = (root / 'backup-index.txt').read_text(encoding='utf-8')
+          assert 'area_08.png  MISSING' in backup
+          assert '/disaster/areas/08/index.html  TARGET MISSING' in backup
+
+          html = Path('dist/index.html').read_text(encoding='utf-8')
+          required = [
+              'assets/vs/update-history.html',
+              'assets/vs/area_01.png',
+              'assets/vs/backup-index.txt',
+              'assets/vs/h10_summer_disaster_plan.pdf',
+              'assets/vs/h10_water_points.pdf',
+              'assets/vs/pdf-metadata.html',
+          ]
+          for ref in required:
+              assert ref in html, ref
+          print('Vertical Slice media validation: PASS')
+          PY
+
+      - name: Commit generated production assets
+        shell: bash
+        run: |
+          if git diff --quiet -- dist/index.html dist/assets/vs; then
+            echo 'No generated changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dist/index.html dist/assets/vs
+          git commit -m 'feat(site): add vertical-slice archival evidence media'
+          git push origin HEAD:codex-district-eight-sites
