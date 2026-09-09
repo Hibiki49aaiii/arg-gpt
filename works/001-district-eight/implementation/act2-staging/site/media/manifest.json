@@ -1,0 +1,52 @@
+{
+  "status": "STAGING_ONLY_HUMAN_GATE_8_OPEN",
+  "public_runtime_linked": false,
+  "assets": [
+    {
+      "id": "MED-016",
+      "file": "med-016-bousai-215-scan.png",
+      "type": "scan"
+    },
+    {
+      "id": "MED-017",
+      "file": "med-017-meeting-minutes.pdf",
+      "type": "pdf",
+      "pages": 2
+    },
+    {
+      "id": "MED-018",
+      "file": "med-018-subjects-fragment-scan.png",
+      "type": "scan"
+    },
+    {
+      "id": "MED-019",
+      "file": "med-019-graduation-ledger-scan.png",
+      "type": "scan"
+    },
+    {
+      "id": "MED-020",
+      "file": "med-020-school-summer-notice.pdf",
+      "type": "pdf",
+      "pages": 1
+    },
+    {
+      "id": "MED-020B",
+      "file": "med-020b-enrollment-confirmation-scan.png",
+      "type": "scan",
+      "role": "identity corroboration"
+    },
+    {
+      "id": "MED-021",
+      "file": "med-021-telephone-index-scan.png",
+      "type": "scan",
+      "optional": true
+    }
+  ],
+  "spoiler_prohibitions": [
+    "27秒",
+    "33秒",
+    "共同記憶同期",
+    "記述密度",
+    "player causality"
+  ]
+}

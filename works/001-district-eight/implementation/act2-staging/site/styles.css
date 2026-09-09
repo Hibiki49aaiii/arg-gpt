@@ -32,3 +32,10 @@ th{background:#f0f3f5}
 .school-card{background:#fffdf6;border:1px solid #c5ad87;padding:13px 15px;margin:14px 0}
 footer{border-top:1px solid #ccd3d7;padding:16px 28px;color:#667178;font-size:.85rem}
 @media(max-width:640px){main,.school-main{padding:16px}.archive-header,.school-header{padding:18px}.archive-nav,.school-nav{padding:9px 16px}.doc-page{padding:22px 15px;box-shadow:none}.search-row{display:block}.search-row input{width:100%;min-width:0;margin-bottom:8px}table{font-size:.9rem}}
+
+
+/* Act 2 staging evidence media */
+.media-evidence{margin:22px auto;padding:10px;max-width:760px;border:1px solid #b5afa3;background:#eee9dd;box-shadow:3px 4px 0 rgba(60,55,45,.08)}
+.media-evidence img{display:block;width:100%;height:auto;filter:saturate(.55) contrast(.98)}
+.media-evidence figcaption{margin-top:8px;color:#666;font-size:12px;text-align:center}
+.media-evidence.wide{max-width:960px;overflow-x:auto}.media-link{margin:16px 0;padding:9px 12px;border-left:3px solid #60706c;background:#efebe1}
