@@ -30,3 +30,13 @@ note:
 08 is retained in the historical file list because the original index
 contained the filename. The corresponding image/page was not present
 in the preservation source.
+
+[preservation-local]
+areas/01/index.html  SAVED
+areas/02/index.html  SAVED
+areas/03/index.html  SAVED
+areas/04/index.html  SAVED
+areas/05/index.html  SAVED
+areas/06/index.html  SAVED
+areas/07/index.html  SAVED
+areas/08/index.html  MISSING
