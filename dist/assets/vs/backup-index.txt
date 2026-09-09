@@ -1,0 +1,32 @@
+# 凪代市旧防災サイト バックアップ索引
+# mirror snapshot: 2004-03-18
+# charset: Shift_JIS (converted for preservation)
+
+[areas]
+area_01.png  OK
+area_02.png  OK
+area_03.png  OK
+area_04.png  OK
+area_05.png  OK
+area_06.png  OK
+area_07.png  OK
+area_08.png  MISSING
+
+[pages]
+/disaster/areas/01/index.html  SAVED
+/disaster/areas/02/index.html  SAVED
+/disaster/areas/03/index.html  SAVED
+/disaster/areas/04/index.html  SAVED
+/disaster/areas/05/index.html  SAVED
+/disaster/areas/06/index.html  SAVED
+/disaster/areas/07/index.html  SAVED
+/disaster/areas/08/index.html  TARGET MISSING
+
+[documents]
+h10_summer_disaster_plan.pdf  SAVED
+h10_water_points.pdf          SAVED
+
+note:
+08 is retained in the historical file list because the original index
+contained the filename. The corresponding image/page was not present
+in the preservation source.
