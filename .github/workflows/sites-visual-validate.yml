@@ -33,6 +33,7 @@ jobs:
           hosting_path = root / '.openai' / 'hosting.json'
           assets_dir = root / 'dist' / 'assets'
           vs_dir = assets_dir / 'vs'
+          areas_dir = vs_dir / 'areas'
 
           expected_svg = [
               'nagishiro-seal.svg',
@@ -50,12 +51,14 @@ jobs:
               'h10_water_points.pdf',
               'pdf-metadata.html',
               'update-history.html',
+              'contact.html',
           ]
 
           assert html_path.is_file(), 'dist/index.html missing'
           assert hosting_path.is_file(), '.openai/hosting.json missing'
           assert assets_dir.is_dir(), 'dist/assets missing'
           assert vs_dir.is_dir(), 'dist/assets/vs missing'
+          assert areas_dir.is_dir(), 'dist/assets/vs/areas missing'
 
           hosting = json.loads(hosting_path.read_text(encoding='utf-8'))
           assert hosting.get('project_id') == 'appgprj_6a9836915bf48191bd2d504f8ac6c46e', 'unexpected Sites project id'
@@ -96,6 +99,8 @@ jobs:
           backup = (vs_dir / 'backup-index.txt').read_text(encoding='utf-8')
           assert 'area_08.png  MISSING' in backup
           assert '/disaster/areas/08/index.html  TARGET MISSING' in backup
+          assert 'areas/07/index.html  SAVED' in backup
+          assert 'areas/08/index.html  MISSING' in backup
 
           metadata = (vs_dir / 'pdf-metadata.html').read_text(encoding='utf-8')
           assert '平成10年夏季防災計画' in metadata
@@ -105,6 +110,20 @@ jobs:
           history = (vs_dir / 'update-history.html').read_text(encoding='utf-8')
           assert '2004-03-18' in history and '1998-07-03' in history
 
+          contact = (vs_dir / 'contact.html').read_text(encoding='utf-8')
+          assert 'example.invalid' in contact
+          assert '000-000-0000' in contact
+          assert '現実の緊急連絡先ではありません。' in contact
+
+          for n in range(1, 8):
+              p = areas_dir / f'{n:02d}' / 'index.html'
+              assert p.is_file(), f'missing ordinary area page: {p}'
+              text = p.read_text(encoding='utf-8')
+              assert f'地区 {n:02d}' in text
+              assert '個別ページ・地区画像とも保存済み' in text
+              assert 'これはフィクション作品内の架空自治体ページです。' in text
+          assert not (areas_dir / '08' / 'index.html').exists(), 'areas/08 must remain a real missing path'
+
           required_vs_refs = [
               'assets/vs/update-history.html',
               'assets/vs/area_01.png',
@@ -112,6 +131,8 @@ jobs:
               'assets/vs/h10_summer_disaster_plan.pdf',
               'assets/vs/h10_water_points.pdf',
               'assets/vs/pdf-metadata.html',
+              'assets/vs/areas/01/index.html',
+              'assets/vs/contact.html',
           ]
           for ref in required_vs_refs:
               assert ref in html, f'VS asset not linked from index: {ref}'
@@ -126,7 +147,8 @@ jobs:
 
           print('Sites project:', hosting['project_id'])
           print('SVG assets:', len(expected_svg))
-          print('Vertical Slice media:', len(expected_vs))
+          print('Vertical Slice root media:', len(expected_vs))
+          print('Ordinary district pages: 7')
           print('Static bundle validation: PASS')
           PY
 
@@ -138,7 +160,7 @@ jobs:
         run: |
           count=$((1 + $(find dist -type f | wc -l)))
           echo "Expected Sites package files: $count"
-          test "$count" -eq 21
+          test "$count" -eq 29
 
       - name: Install Chromium smoke-test runtime
         shell: bash
@@ -206,6 +228,8 @@ jobs:
               await page.goto('http://127.0.0.1:8080/#areas', { waitUntil: 'networkidle' });
               await page.waitForSelector('a[href="assets/vs/backup-index.txt"]');
               assert.equal(await page.locator('a[href="assets/vs/area_01.png"]').count(), 1);
+              assert.equal(await page.locator('a[href="assets/vs/areas/01/index.html"]').count(), 1);
+              assert.equal(await page.locator('a[href="assets/vs/contact.html"]').count(), 1);
 
               await page.goto('http://127.0.0.1:8080/#archive?q=08', { waitUntil: 'networkidle' });
               await page.waitForSelector('a[href="assets/vs/h10_summer_disaster_plan.pdf"]');
@@ -219,12 +243,16 @@ jobs:
                 'assets/vs/h10_water_points.pdf',
                 'assets/vs/pdf-metadata.html',
                 'assets/vs/update-history.html',
+                'assets/vs/contact.html',
+                ...Array.from({length: 7}, (_, i) => `assets/vs/areas/${String(i + 1).padStart(2, '0')}/index.html`),
               ]) {
                 const res = await page.request.get(`http://127.0.0.1:8080/${path}`);
                 assert.equal(res.status(), 200, `${path} should return 200`);
               }
-              const missing08 = await page.request.get('http://127.0.0.1:8080/assets/vs/area_08.png');
-              assert.equal(missing08.status(), 404, 'area_08.png must remain missing');
+              const missingIcon08 = await page.request.get('http://127.0.0.1:8080/assets/vs/area_08.png');
+              assert.equal(missingIcon08.status(), 404, 'area_08.png must remain missing');
+              const missingPage08 = await page.request.get('http://127.0.0.1:8080/assets/vs/areas/08/index.html');
+              assert.equal(missingPage08.status(), 404, 'areas/08/index.html must remain missing');
 
               await page.evaluate(state => {
                 localStorage.setItem('district8-sites-bundle-v1', JSON.stringify(state));
